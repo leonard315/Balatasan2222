@@ -1,0 +1,348 @@
+{{> head}}
+<body class="bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen">
+  {{> navbar}}
+
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <a href="/amenities/water-sports" class="inline-flex items-center text-purple-600 hover:text-purple-800 mb-4 transition">
+      <span class="mr-2">←</span> Back to Water Activities
+    </a>
+    <div class="bg-white rounded-xl shadow-lg p-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6">🎢 Book Water Activity</h2>
+
+      {{#if error_msg}}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          {{error_msg}}
+        </div>
+      {{/if}}
+
+      <form method="POST" action="/bookings/water-activities">
+        <div class="mb-6">
+          <label class="block text-gray-700 font-semibold mb-2">Activity Date</label>
+          <input type="date" name="checkIn" required 
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" />
+        </div>
+
+        <!-- Activity Preview - Full Width Image Only -->
+        <div id="activityPreview" class="hidden mb-6 -mx-8 rounded-none overflow-hidden shadow-2xl">
+          <img id="activityImage" src="" alt="Activity Preview" class="w-full h-96 object-cover" />
+          <div class="mx-8 bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-b-lg">
+            <h3 id="activityTitle" class="text-2xl font-bold text-gray-800 mb-2"></h3>
+            <p id="activityDescription" class="text-sm text-gray-600 mb-3"></p>
+            <div class="grid grid-cols-3 gap-4 mb-2">
+              <div>
+                <p class="text-xs text-gray-500">Base Price</p>
+                <p id="activityPrice" class="text-2xl font-bold text-purple-600"></p>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500">Capacity</p>
+                <p id="activityCapacity" class="text-lg font-semibold text-gray-800"></p>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500">Duration</p>
+                <p id="activityDuration" class="text-lg font-semibold text-gray-800"></p>
+              </div>
+            </div>
+            <p id="excessCharge" class="text-xs text-orange-600 font-semibold"></p>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-gray-700 font-semibold mb-3">🎢 Select Water Activity</label>
+          <select name="activity" id="activityType" required onchange="showActivityPreview()"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+            <option value="">Choose your adventure</option>
+            <option value="flying-fish" data-price="1500" data-capacity="3" data-duration="15 minutes" data-excess="500" data-image="https://image.made-in-china.com/2f0j00MOkhvzBKSgce/Water-Sport-PVC-8-Seats-Inflatable-Flying-Fish-Banana-Boat.jpg" data-desc="Experience the thrill of flying over the waves! Hold on tight as you soar above the water.">Flying Fish - ₱1,500 (3 pax, 15 mins)</option>
+            <option value="banana-boat" data-price="3000" data-capacity="12" data-duration="15 minutes" data-excess="250" data-image="https://www.coltonyacht.com/storage/uploads/images/202208/24/1661332648_N8hzGip6z0.jpg" data-desc="Fun group ride perfect for families! Enjoy the bouncing waves together.">Banana Boat - ₱3,000 (12 pax, 15 mins)</option>
+            <option value="hurricane" data-price="2000" data-capacity="6" data-duration="15 minutes" data-excess="350" data-image="https://www.oklilytoys.com/data/watermark/20211026/617819164fb2c.jpg" data-desc="Spin and splash in this exciting ride! Get ready for twists and turns.">Hurricane - ₱2,000 (6 pax, 15 mins)</option>
+            <option value="crazy-ufo" data-price="2000" data-capacity="6" data-duration="15 minutes" data-excess="350" data-image="https://www.vivovenetia.it/wp-content/uploads/2018/11/sport-in-spiaggia-jesolo.jpeg" data-desc="Out-of-this-world water adventure! Experience the ultimate thrill ride.">Crazy UFO - ₱2,000 (6 pax, 15 mins)</option>
+            <option value="pedal-boat" data-price="500" data-capacity="4" data-duration="1 hour" data-excess="0" data-image="https://m.media-amazon.com/images/S/aplus-media-library-service-media/0939340e-ea06-42d6-ac88-b01da83718f0.__CR0,0,300,300_PT0_SX300_V1___.jpg" data-desc="Leisurely cruise around the bay. Perfect for a relaxing time on the water.">Pedal Boat - ₱500 (4 pax, 1 hour)</option>
+            <option value="hand-paddle" data-price="200" data-capacity="2" data-duration="1 hour" data-excess="0" data-image="https://cdn11.bigcommerce.com/s-878a4/images/stencil/1280x1280/products/1379/2338/sundolphin_canopy__85735.1568130495.jpg?c=2&imbypass=on" data-desc="Traditional paddle boat experience. Enjoy a peaceful journey at your own pace.">Hand Paddle Boat - ₱200 (1 hour)</option>
+            <option value="jet-ski" data-price="150" data-capacity="4" data-duration="per minute" data-excess="0" data-per-minute="true" data-image="https://www.jetskitoursperth.com.au/wp-content/uploads/2017/03/Jetski-Tours-66-scaled.jpg" data-desc="High-speed adventure across the waves! Feel the adrenaline rush as you zoom through the water.">Jet Ski - ₱150/minute (up to 4 pax)</option>
+          </select>
+        </div>
+
+        <!-- Duration Selector for Jet Ski -->
+        <div id="durationSelector" class="mb-6 hidden">
+          <label class="block text-gray-700 font-semibold mb-2">Duration (minutes)</label>
+          <input type="number" name="duration" id="durationMinutes" min="5" max="60" value="15" onchange="calculateTotal()"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+            placeholder="Enter duration in minutes" />
+          <p class="text-xs text-gray-500 mt-1">Minimum 5 minutes, Maximum 60 minutes</p>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-gray-700 font-semibold mb-2">Number of Participants</label>
+          <input type="number" name="guests" id="guestCount" min="1" max="20" required onchange="calculateTotal()"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+            placeholder="Enter number of participants" />
+          <p id="capacityWarning" class="text-xs text-orange-600 mt-1 hidden"></p>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-gray-700 font-semibold mb-2">Special Requests (Optional)</label>
+          <textarea name="notes" rows="3" 
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+            placeholder="Any special requirements..."></textarea>
+        </div>
+
+        <!-- Price Summary -->
+        <div id="priceSummary" class="hidden bg-purple-50 rounded-lg p-6 mb-6">
+          <h3 class="text-lg font-bold text-gray-800 mb-3">💰 Price Breakdown</h3>
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700">Base Price</span>
+              <span id="basePrice" class="font-semibold text-gray-800"></span>
+            </div>
+            <div id="excessRow" class="hidden flex justify-between items-center">
+              <span class="text-gray-700">Excess Charge (<span id="excessCount"></span> person)</span>
+              <span id="excessPrice" class="font-semibold text-gray-800"></span>
+            </div>
+            <hr class="border-gray-300">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700 font-bold">Total Amount</span>
+              <span id="totalPrice" class="text-2xl font-bold text-purple-600"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="bg-purple-50 border border-purple-200 rounded-lg p-6 mb-6">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">💳 Payment Method</h3>
+          
+          <div class="space-y-3 mb-4">
+            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-purple-500 transition" onclick="showPaymentDetails('gcash')">
+              <input type="radio" name="paymentMethod" value="gcash" required class="w-5 h-5 text-purple-600" />
+              <div class="ml-3 flex-1">
+                <div class="flex items-center">
+                  <span class="text-2xl mr-2">💙</span>
+                  <span class="font-semibold text-gray-800">GCash</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-1">Pay via GCash mobile wallet</p>
+              </div>
+            </label>
+
+            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-purple-500 transition" onclick="showPaymentDetails('paymaya')">
+              <input type="radio" name="paymentMethod" value="paymaya" required class="w-5 h-5 text-purple-600" />
+              <div class="ml-3 flex-1">
+                <div class="flex items-center">
+                  <span class="text-2xl mr-2">💚</span>
+                  <span class="font-semibold text-gray-800">PayMaya</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-1">Pay using PayMaya wallet</p>
+              </div>
+            </label>
+
+            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-purple-500 transition" onclick="showPaymentDetails('credit-card')">
+              <input type="radio" name="paymentMethod" value="credit-card" required class="w-5 h-5 text-purple-600" />
+              <div class="ml-3 flex-1">
+                <div class="flex items-center">
+                  <span class="text-2xl mr-2">💳</span>
+                  <span class="font-semibold text-gray-800">Credit/Debit Card</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-1">Visa, Mastercard, or other cards</p>
+              </div>
+            </label>
+
+            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-purple-500 transition" onclick="showPaymentDetails('cash')">
+              <input type="radio" name="paymentMethod" value="cash" required class="w-5 h-5 text-purple-600" />
+              <div class="ml-3 flex-1">
+                <div class="flex items-center">
+                  <span class="text-2xl mr-2">💵</span>
+                  <span class="font-semibold text-gray-800">Cash on Arrival</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-1">Pay when you arrive at the resort</p>
+              </div>
+            </label>
+          </div>
+
+          <!-- Payment Details Section -->
+          <div id="paymentDetailsSection" class="hidden mt-4">
+            <!-- GCash Details -->
+            <div id="gcashDetails" class="payment-details hidden bg-white rounded-lg p-4 border-2 border-blue-300">
+              <h4 class="font-bold text-gray-800 mb-3">💙 GCash Payment Details</h4>
+              <div class="bg-blue-50 p-3 rounded mb-3">
+                <p class="text-sm font-semibold text-gray-800">Send payment to:</p>
+                <p class="text-3xl font-bold text-blue-600 mb-1">09171234567</p>
+                <p class="text-sm text-gray-600">Account Name: Balatasan Beach Resort</p>
+              </div>
+              <div class="bg-yellow-50 p-3 rounded">
+                <p class="text-sm text-gray-700">💡 After booking, you can upload your payment proof from "My Bookings" page</p>
+              </div>
+            </div>
+
+            <!-- PayMaya Details -->
+            <div id="paymayaDetails" class="payment-details hidden bg-white rounded-lg p-4 border-2 border-green-300">
+              <h4 class="font-bold text-gray-800 mb-3">💚 PayMaya Payment Details</h4>
+              <div class="bg-green-50 p-3 rounded mb-3">
+                <p class="text-sm font-semibold text-gray-800">Send payment to:</p>
+                <p class="text-lg font-bold text-green-600">09171234567</p>
+                <p class="text-sm text-gray-600">Account Name: Balatasan Beach Resort</p>
+              </div>
+              <p class="text-sm text-gray-600">No additional information needed at this time.</p>
+            </div>
+
+            <!-- Credit Card Details -->
+            <div id="creditCardDetails" class="payment-details hidden bg-white rounded-lg p-4 border-2 border-purple-300">
+              <h4 class="font-bold text-gray-800 mb-3">💳 Credit/Debit Card Payment</h4>
+              <div class="bg-purple-50 p-3 rounded mb-3">
+                <p class="text-sm text-gray-700">A payment link will be sent to your email after booking confirmation.</p>
+              </div>
+              <p class="text-sm text-gray-600">No additional information needed at this time.</p>
+            </div>
+
+            <!-- Cash Details -->
+            <div id="cashDetails" class="payment-details hidden bg-white rounded-lg p-4 border-2 border-yellow-300">
+              <h4 class="font-bold text-gray-800 mb-3">💵 Cash on Arrival</h4>
+              <div class="bg-yellow-50 p-3 rounded mb-3">
+                <p class="text-sm text-gray-700">You can pay in cash when you arrive at the resort.</p>
+                <p class="text-sm text-gray-700 mt-2"><strong>Note:</strong> A 50% deposit may be required via other payment methods to confirm your booking.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg p-4 mt-4">
+            <p class="text-sm text-gray-700 mb-2"><strong>📌 Payment Instructions:</strong></p>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Full payment is required to confirm your water activity booking</li>
+              <li>• Upload proof of payment after making the payment</li>
+              <li>• Booking must be confirmed at least 1 day before activity date</li>
+              <li>• Cancellations made 24 hours before activity are fully refundable</li>
+              <li>• Activities are subject to weather conditions</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <button type="submit" 
+            class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-lg transition">
+            Submit Booking
+          </button>
+          <a href="/amenities/water-sports" 
+            class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 rounded-lg text-center transition">
+            Cancel
+          </a>
+        </div>
+      </form>
+
+      <script>
+        let currentActivity = null;
+
+        function showPaymentDetails(method) {
+          document.querySelectorAll('.payment-details').forEach(el => el.classList.add('hidden'));
+          document.getElementById('paymentDetailsSection').classList.remove('hidden');
+          
+          const detailsMap = {
+            'gcash': 'gcashDetails',
+            'paymaya': 'paymayaDetails',
+            'credit-card': 'creditCardDetails',
+            'cash': 'cashDetails'
+          };
+          
+          const detailsId = detailsMap[method];
+          if (detailsId) {
+            document.getElementById(detailsId).classList.remove('hidden');
+          }
+        }
+
+        function showActivityPreview() {
+          const select = document.getElementById('activityType');
+          const selectedOption = select.options[select.selectedIndex];
+          const preview = document.getElementById('activityPreview');
+          const durationSelector = document.getElementById('durationSelector');
+
+          if (selectedOption.value) {
+            const isPerMinute = selectedOption.getAttribute('data-per-minute') === 'true';
+            
+            currentActivity = {
+              price: parseInt(selectedOption.getAttribute('data-price')),
+              capacity: parseInt(selectedOption.getAttribute('data-capacity')),
+              excess: parseInt(selectedOption.getAttribute('data-excess')),
+              image: selectedOption.getAttribute('data-image'),
+              desc: selectedOption.getAttribute('data-desc'),
+              duration: selectedOption.getAttribute('data-duration'),
+              name: selectedOption.text.split(' - ')[0],
+              perMinute: isPerMinute
+            };
+
+            document.getElementById('activityImage').src = currentActivity.image;
+            document.getElementById('activityTitle').textContent = currentActivity.name;
+            document.getElementById('activityDescription').textContent = currentActivity.desc;
+            
+            if (isPerMinute) {
+              document.getElementById('activityPrice').textContent = '₱' + currentActivity.price.toLocaleString() + '/min';
+              durationSelector.classList.remove('hidden');
+            } else {
+              document.getElementById('activityPrice').textContent = '₱' + currentActivity.price.toLocaleString();
+              durationSelector.classList.add('hidden');
+            }
+            
+            document.getElementById('activityCapacity').textContent = currentActivity.capacity + ' persons';
+            document.getElementById('activityDuration').textContent = currentActivity.duration;
+            
+            if (currentActivity.excess > 0) {
+              document.getElementById('excessCharge').textContent = '⚠️ Additional charge: ₱' + currentActivity.excess + ' per person beyond capacity';
+            } else {
+              document.getElementById('excessCharge').textContent = '';
+            }
+
+            preview.classList.remove('hidden');
+            preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            calculateTotal();
+          } else {
+            preview.classList.add('hidden');
+            document.getElementById('priceSummary').classList.add('hidden');
+            durationSelector.classList.add('hidden');
+          }
+        }
+
+        function calculateTotal() {
+          if (!currentActivity) return;
+
+          const guests = parseInt(document.getElementById('guestCount').value) || 0;
+          const warning = document.getElementById('capacityWarning');
+          const priceSummary = document.getElementById('priceSummary');
+
+          if (guests > 0) {
+            let basePrice = currentActivity.price;
+            
+            // Handle per-minute pricing
+            if (currentActivity.perMinute) {
+              const duration = parseInt(document.getElementById('durationMinutes').value) || 15;
+              basePrice = currentActivity.price * duration;
+              document.getElementById('basePrice').textContent = '₱' + currentActivity.price + '/min × ' + duration + ' mins = ₱' + basePrice.toLocaleString();
+            } else {
+              document.getElementById('basePrice').textContent = '₱' + basePrice.toLocaleString();
+            }
+            
+            let total = basePrice;
+            let excessCount = 0;
+            let excessAmount = 0;
+
+            if (guests > currentActivity.capacity && currentActivity.excess > 0) {
+              excessCount = guests - currentActivity.capacity;
+              excessAmount = excessCount * currentActivity.excess;
+              total += excessAmount;
+              
+              warning.textContent = `Note: ${excessCount} person(s) exceed base capacity. Additional charge applies.`;
+              warning.classList.remove('hidden');
+              
+              document.getElementById('excessRow').classList.remove('hidden');
+              document.getElementById('excessCount').textContent = excessCount;
+              document.getElementById('excessPrice').textContent = '₱' + excessAmount.toLocaleString();
+            } else {
+              warning.classList.add('hidden');
+              document.getElementById('excessRow').classList.add('hidden');
+            }
+
+            document.getElementById('totalPrice').textContent = '₱' + total.toLocaleString();
+            priceSummary.classList.remove('hidden');
+          } else {
+            priceSummary.classList.add('hidden');
+            warning.classList.add('hidden');
+          }
+        }
+      </script>
+    </div>
+  </div>
+{{> footer}}

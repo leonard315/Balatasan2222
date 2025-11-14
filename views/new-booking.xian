@@ -1,0 +1,286 @@
+{{> head}}
+<body class="bg-gradient-to-br from-blue-50 to-cyan-50 min-h-screen">
+  {{> navbar}}
+
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <a href="/dashboard" class="inline-flex items-center text-blue-600 hover:text-blue-800 mb-4 transition">
+      <span class="mr-2">←</span> Back to Dashboard
+    </a>
+    <div class="bg-white rounded-xl shadow-lg p-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6">🏨 New Booking</h2>
+
+      <!-- Tour Preview -->
+      <div id="roomPreview" class="hidden mb-6 rounded-lg overflow-hidden shadow-md bg-gray-100">
+        <img id="roomImage" src="" alt="Tour Preview" class="w-full max-h-96 object-contain mx-auto" />
+        <div class="bg-gradient-to-r from-blue-50 to-cyan-50 p-6">
+          <h3 id="roomTitle" class="text-2xl font-bold text-gray-800 mb-3"></h3>
+          <p id="tourDescription" class="text-gray-700 mb-4"></p>
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <p class="text-gray-600">Price per Person</p>
+              <p id="roomPrice" class="text-2xl font-bold text-blue-600"></p>
+            </div>
+            <div id="durationDiv">
+              <p class="text-gray-600">Duration</p>
+              <p id="activityDuration" class="text-lg font-semibold text-gray-800"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {{#if error_msg}}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          {{error_msg}}
+        </div>
+      {{/if}}
+
+      <form method="POST" action="/bookings/new">
+        <input type="hidden" name="bookingType" value="tours" />
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2">Booking Date</label>
+            <input type="date" name="checkIn" required 
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+          </div>
+          <div id="checkOutDiv">
+            <label class="block text-gray-700 font-semibold mb-2">End Date (Optional)</label>
+            <input type="date" name="checkOut" 
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+          </div>
+        </div>
+
+        <!-- Tours Selection -->
+        <div id="toursSection" class="mb-6">
+          <label class="block text-gray-700 font-semibold mb-3">🏝️ Available Island Tour Packages</label>
+          <p class="text-sm text-gray-600 mb-3">Explore the natural wonders surrounding Balatasan. Adventure awaits!</p>
+          <select name="tourType" id="tourType" required onchange="showRoomPreview()"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+            <option value="">Select your island adventure</option>
+            <option value="aslom-silahaf" data-image="https://travelorientalmindoro.ph/Content/img/uploads/83c5a007-b150-430f-b9c4-c5a7549a7f13_thumb.jpg" data-price="1,200" data-capacity="" data-duration="5 hours" data-excess="" data-desc="Visit the beautiful sandbar of Aslom Island and the pristine Sibalat Island. Enjoy a freshly prepared lunch in a secluded beach.">Aslom & Sibalat Island Hopping - ₱1,200 (5 hours) ⭐4.5</option>
+            <option value="target-island" data-image="https://travelorientalmindoro.ph/Content/img/uploads/33b63d38-739b-4b7f-b8c4-ca744970c5cf.jpg" data-price="1,000" data-capacity="" data-duration="4 hours" data-excess="" data-desc="Discover the hidden gem of Target Island, with its crystal clear waters and untouched nature. Perfect for swimming and relaxation.">Target Island Adventure - ₱1,000 (4 hours) ⭐4.7</option>
+            <option value="buyayao" data-image="https://travelorientalmindoro.ph/Content/img/uploads/aaeb2388-f485-4799-8db1-c31162b102a8_thumb.jpg" data-price="1,500" data-capacity="" data-duration="6 hours" data-excess="" data-desc="Explore the rich marine biodiversity of Buyayao Island. A must-visit for snorkelers and nature lovers alike.">Buyayao Island Marine Sanctuary - ₱1,500 (6 hours) ⭐4.8</option>
+            <option value="suguicay" data-image="https://travelorientalmindoro.ph/Content/img/uploads/0ccf5666-41a4-4efc-b51c-abcb142057e7.jpg" data-price="900" data-capacity="" data-duration="4 hours" data-excess="" data-desc="Relax on the long, white sandbar of Suguicay Island. A perfect spot for sunbathing, swimming, and enjoying the serene atmosphere.">Suguicay Island Getaway - ₱900 (4 hours) ⭐4.6</option>
+            <option value="silad" data-image="https://travelorientalmindoro.ph/Content/img/uploads/04468cee-9e1b-469f-a21c-90fef8360379.jpg" data-price="950" data-capacity="" data-duration="4 hours" data-excess="" data-desc="Discover the tranquil beauty and clear waters of Silad Island, a perfect spot for relaxation and swimming.">Silad Island Exploration - ₱950 (4 hours) ⭐4.5</option>
+          </select>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-gray-700 font-semibold mb-2">Number of Guests</label>
+          <input type="number" name="guests" min="1" max="20" required 
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-gray-700 font-semibold mb-2">Special Requests (Optional)</label>
+          <textarea name="notes" rows="4" 
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Any special requirements or requests..."></textarea>
+        </div>
+
+        <!-- Payment Method Section -->
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">💳 Payment Method</h3>
+          
+          <div class="space-y-3 mb-4">
+            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition">
+              <input type="radio" name="paymentMethod" value="gcash" required class="w-5 h-5 text-blue-600" onchange="showPaymentDetails('gcash')" />
+              <div class="ml-3 flex-1">
+                <div class="flex items-center">
+                  <span class="text-2xl mr-2">💙</span>
+                  <span class="font-semibold text-gray-800">GCash</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-1">Pay via GCash mobile wallet</p>
+              </div>
+            </label>
+
+            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition">
+              <input type="radio" name="paymentMethod" value="paymaya" required class="w-5 h-5 text-blue-600" onchange="showPaymentDetails('paymaya')" />
+              <div class="ml-3 flex-1">
+                <div class="flex items-center">
+                  <span class="text-2xl mr-2">💚</span>
+                  <span class="font-semibold text-gray-800">PayMaya</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-1">Pay using PayMaya wallet</p>
+              </div>
+            </label>
+
+            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition">
+              <input type="radio" name="paymentMethod" value="credit-card" required class="w-5 h-5 text-blue-600" onchange="showPaymentDetails('credit-card')" />
+              <div class="ml-3 flex-1">
+                <div class="flex items-center">
+                  <span class="text-2xl mr-2">💳</span>
+                  <span class="font-semibold text-gray-800">Credit/Debit Card</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-1">Visa, Mastercard, or other cards</p>
+              </div>
+            </label>
+
+            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition">
+              <input type="radio" name="paymentMethod" value="cash" required class="w-5 h-5 text-blue-600" onchange="showPaymentDetails('cash')" />
+              <div class="ml-3 flex-1">
+                <div class="flex items-center">
+                  <span class="text-2xl mr-2">💵</span>
+                  <span class="font-semibold text-gray-800">Cash on Arrival</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-1">Pay when you check-in at the resort</p>
+              </div>
+            </label>
+          </div>
+
+          <!-- Payment Details Section (Hidden by default) -->
+          <div id="paymentDetailsSection" class="hidden mt-4">
+            <!-- GCash Details -->
+            <div id="gcashDetails" class="payment-details hidden bg-white rounded-lg p-4 border-2 border-blue-300">
+              <h4 class="font-bold text-gray-800 mb-3">💙 GCash Payment Details</h4>
+              <div class="bg-blue-50 p-3 rounded mb-3">
+                <p class="text-sm font-semibold text-gray-800">Send payment to:</p>
+                <p class="text-lg font-bold text-blue-600">09171234567</p>
+                <p class="text-sm text-gray-600">Account Name: Balatasan Beach Resort</p>
+              </div>
+              <div class="mb-3">
+                <label class="block text-gray-700 font-semibold mb-2">Reference Number (Optional)</label>
+                <input type="text" name="referenceNumber" id="gcashRef"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter GCash reference number" />
+              </div>
+              <p class="text-xs text-gray-500 bg-blue-50 p-2 rounded">
+                💡 After booking, you can upload your payment proof from "My Bookings" page
+              </p>
+            </div>
+
+            <!-- PayMaya Details -->
+            <div id="paymayaDetails" class="payment-details hidden bg-white rounded-lg p-4 border-2 border-green-300">
+              <h4 class="font-bold text-gray-800 mb-3">💚 PayMaya Payment Details</h4>
+              <div class="bg-green-50 p-3 rounded mb-3">
+                <p class="text-sm font-semibold text-gray-800">Send payment to:</p>
+                <p class="text-lg font-bold text-green-600">09171234567</p>
+                <p class="text-sm text-gray-600">Account Name: Balatasan Beach Resort</p>
+              </div>
+              <div class="mb-3">
+                <label class="block text-gray-700 font-semibold mb-2">Reference Number (Optional)</label>
+                <input type="text" name="referenceNumber" id="paymayaRef"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                  placeholder="Enter PayMaya reference number" />
+              </div>
+              <p class="text-xs text-gray-500 bg-green-50 p-2 rounded">
+                💡 After booking, you can upload your payment proof from "My Bookings" page
+              </p>
+            </div>
+
+            <!-- Credit Card Details -->
+            <div id="creditCardDetails" class="payment-details hidden bg-white rounded-lg p-4 border-2 border-purple-300">
+              <h4 class="font-bold text-gray-800 mb-3">💳 Credit/Debit Card Payment</h4>
+              <div class="bg-purple-50 p-3 rounded mb-3">
+                <p class="text-sm text-gray-700">A payment link will be sent to your email after booking confirmation.</p>
+              </div>
+              <p class="text-sm text-gray-600">No additional information needed at this time.</p>
+            </div>
+
+            <!-- Cash Details -->
+            <div id="cashDetails" class="payment-details hidden bg-white rounded-lg p-4 border-2 border-yellow-300">
+              <h4 class="font-bold text-gray-800 mb-3">💵 Cash on Arrival</h4>
+              <div class="bg-yellow-50 p-3 rounded mb-3">
+                <p class="text-sm text-gray-700">You can pay in cash when you arrive at the resort during check-in.</p>
+                <p class="text-sm text-gray-700 mt-2"><strong>Note:</strong> A 50% deposit may be required via other payment methods to confirm your booking.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg p-4 mt-4">
+            <p class="text-sm text-gray-700 mb-2"><strong>📌 Payment Instructions:</strong></p>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• A 50% deposit is required to confirm your booking</li>
+              <li>• Upload proof of payment after making the deposit</li>
+              <li>• Full payment must be completed 3 days before check-in</li>
+              <li>• Cancellations made 7 days before check-in are fully refundable</li>
+            </ul>
+          </div>
+        </div>
+
+        <script>
+          function showPaymentDetails(method) {
+            // Hide all payment details and disable their inputs
+            document.querySelectorAll('.payment-details').forEach(el => {
+              el.classList.add('hidden');
+              // Disable all inputs in hidden sections
+              el.querySelectorAll('input').forEach(input => input.disabled = true);
+            });
+            
+            // Show payment details section
+            document.getElementById('paymentDetailsSection').classList.remove('hidden');
+            
+            // Show selected payment method details
+            const detailsMap = {
+              'gcash': 'gcashDetails',
+              'paymaya': 'paymayaDetails',
+              'credit-card': 'creditCardDetails',
+              'cash': 'cashDetails'
+            };
+            
+            const detailsId = detailsMap[method];
+            if (detailsId) {
+              const selectedSection = document.getElementById(detailsId);
+              selectedSection.classList.remove('hidden');
+              // Enable inputs in the visible section
+              selectedSection.querySelectorAll('input').forEach(input => input.disabled = false);
+            }
+          }
+
+          function showRoomPreview() {
+            const select = document.getElementById('tourType');
+            const selectedOption = select.options[select.selectedIndex];
+            const preview = document.getElementById('roomPreview');
+            const image = document.getElementById('roomImage');
+            const title = document.getElementById('roomTitle');
+            const price = document.getElementById('roomPrice');
+            const capacity = document.getElementById('activityCapacity');
+            const duration = document.getElementById('activityDuration');
+            const excess = document.getElementById('activityExcess');
+            const capacityDiv = document.getElementById('capacityDiv');
+            const durationDiv = document.getElementById('durationDiv');
+            const excessDiv = document.getElementById('excessDiv');
+
+            if (selectedOption.value) {
+              const tourImage = selectedOption.getAttribute('data-image');
+              const tourPrice = selectedOption.getAttribute('data-price');
+              const tourDuration = selectedOption.getAttribute('data-duration');
+              const tourDesc = selectedOption.getAttribute('data-desc');
+              const tourName = selectedOption.text.split(' - ')[0];
+
+              image.src = tourImage;
+              title.textContent = tourName;
+              price.textContent = '₱' + tourPrice;
+              duration.textContent = tourDuration;
+              
+              // Show description
+              const descElement = document.getElementById('tourDescription');
+              if (tourDesc) {
+                descElement.textContent = tourDesc;
+                descElement.classList.remove('hidden');
+              }
+
+              preview.classList.remove('hidden');
+              
+              // Scroll to preview
+              preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+              preview.classList.add('hidden');
+            }
+          }
+        </script>
+
+        <div class="flex gap-4">
+          <button type="submit" 
+            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition">
+            Submit Booking Request
+          </button>
+          <a href="/dashboard" 
+            class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 rounded-lg text-center transition">
+            Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+{{> footer}}

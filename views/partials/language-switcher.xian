@@ -1,0 +1,72 @@
+<div class="relative inline-block">
+  <button id="langButton" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-white shadow-sm hover:shadow-md hover:bg-gray-50 transition-all duration-200 border border-gray-200">
+    <span class="text-xl">{{#if (eq currentLang 'tl')}}🇵🇭{{else}}🇺🇸{{/if}}</span>
+    <span class="text-sm font-semibold text-gray-700">{{#if (eq currentLang 'tl')}}TL{{else}}EN{{/if}}</span>
+    <svg id="langArrow" class="w-4 h-4 text-gray-500 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+    </svg>
+  </button>
+  
+  <div id="langMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 z-50 overflow-hidden animate-fadeIn">
+    {{#each availableLanguages}}
+      <form method="POST" action="/set-language" class="block" onsubmit="showLanguageChangeIndicator(event)">
+        <input type="hidden" name="lang" value="{{this.code}}" />
+        <button type="submit" class="w-full text-left px-4 py-3 hover:bg-blue-50 flex items-center gap-3 transition-colors duration-150 {{#if (eq ../currentLang this.code)}}bg-blue-50 border-l-4 border-blue-500{{/if}}">
+          <span class="text-2xl">{{this.flag}}</span>
+          <div class="flex-1">
+            <span class="text-sm font-semibold text-gray-800">{{this.name}}</span>
+            <span class="block text-xs text-gray-500">{{this.code}}</span>
+          </div>
+          {{#if (eq ../currentLang this.code)}}
+            <span class="text-blue-600 font-bold">✓</span>
+          {{/if}}
+        </button>
+      </form>
+    {{/each}}
+  </div>
+</div>
+
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fadeIn {
+    animation: fadeIn 0.2s ease-out;
+  }
+</style>
+
+<script>
+  const langButton = document.getElementById('langButton');
+  const langMenu = document.getElementById('langMenu');
+  const langArrow = document.getElementById('langArrow');
+  
+  langButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isHidden = langMenu.classList.contains('hidden');
+    langMenu.classList.toggle('hidden');
+    langArrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+  });
+  
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!langButton.contains(e.target) && !langMenu.contains(e.target)) {
+      langMenu.classList.add('hidden');
+      langArrow.style.transform = 'rotate(0deg)';
+    }
+  });
+  
+  function showLanguageChangeIndicator(event) {
+    const button = event.target.querySelector('button[type="submit"]');
+    if (button) {
+      button.innerHTML = '<span class="inline-block animate-spin">⏳</span> Changing language...';
+      button.disabled = true;
+    }
+  }
+</script>

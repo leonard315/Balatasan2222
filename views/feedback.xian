@@ -1,0 +1,204 @@
+{{> head}}
+<body class="bg-gradient-to-br from-blue-50 to-cyan-50 min-h-screen">
+  {{> navbar}}
+
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <a href="/dashboard" class="inline-flex items-center text-blue-600 hover:text-blue-800 mb-4 transition">
+      <span class="mr-2">←</span> Back to Dashboard
+    </a>
+
+    <div class="bg-white rounded-xl shadow-lg p-8">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold text-gray-800 mb-2">💬 Feedback & Suggestions</h2>
+        <p class="text-gray-600">Help us improve your experience at Balatasan Beach Resort</p>
+      </div>
+
+      {{#if success_msg}}
+        <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded-lg mb-6 shadow-md">
+          <div class="flex items-center">
+            <span class="text-4xl mr-4">✅</span>
+            <div>
+              <h3 class="text-lg font-bold text-green-800 mb-1">Thank You!</h3>
+              <p class="text-green-700">{{success_msg}}</p>
+            </div>
+          </div>
+        </div>
+      {{/if}}
+
+      {{#if error_msg}}
+        <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-lg mb-6 shadow-md">
+          <div class="flex items-center">
+            <span class="text-4xl mr-4">❌</span>
+            <div>
+              <h3 class="text-lg font-bold text-red-800 mb-1">Error</h3>
+              <p class="text-red-700">{{error_msg}}</p>
+            </div>
+          </div>
+        </div>
+      {{/if}}
+
+      <form method="POST" action="/feedback" class="space-y-6">
+        <!-- Rating -->
+        <div>
+          <label class="block text-gray-700 font-semibold mb-3">Overall Rating *</label>
+          <div class="flex gap-2" id="ratingStars">
+            <input type="radio" name="rating" value="1" id="star1" class="hidden" required />
+            <label for="star1" class="star cursor-pointer text-4xl text-gray-300 hover:text-yellow-400 transition" data-rating="1">★</label>
+            
+            <input type="radio" name="rating" value="2" id="star2" class="hidden" />
+            <label for="star2" class="star cursor-pointer text-4xl text-gray-300 hover:text-yellow-400 transition" data-rating="2">★</label>
+            
+            <input type="radio" name="rating" value="3" id="star3" class="hidden" />
+            <label for="star3" class="star cursor-pointer text-4xl text-gray-300 hover:text-yellow-400 transition" data-rating="3">★</label>
+            
+            <input type="radio" name="rating" value="4" id="star4" class="hidden" />
+            <label for="star4" class="star cursor-pointer text-4xl text-gray-300 hover:text-yellow-400 transition" data-rating="4">★</label>
+            
+            <input type="radio" name="rating" value="5" id="star5" class="hidden" />
+            <label for="star5" class="star cursor-pointer text-4xl text-gray-300 hover:text-yellow-400 transition" data-rating="5">★</label>
+          </div>
+          <p class="text-sm text-gray-500 mt-2" id="ratingText">Click to rate your experience</p>
+        </div>
+
+        <!-- Category -->
+        <div>
+          <label class="block text-gray-700 font-semibold mb-2">Feedback Category *</label>
+          <select name="category" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+            <option value="">Select a category</option>
+            <option value="service">Customer Service</option>
+            <option value="facilities">Facilities & Amenities</option>
+            <option value="cleanliness">Cleanliness</option>
+            <option value="value">Value for Money</option>
+            <option value="location">Location & Accessibility</option>
+            <option value="general">General Feedback</option>
+          </select>
+        </div>
+
+        <!-- Subject -->
+        <div>
+          <label class="block text-gray-700 font-semibold mb-2">Subject *</label>
+          <input type="text" name="subject" required maxlength="200"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Brief summary of your feedback" />
+        </div>
+
+        <!-- Message -->
+        <div>
+          <label class="block text-gray-700 font-semibold mb-2">Your Feedback *</label>
+          <textarea name="message" required rows="6"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Tell us about your experience..."></textarea>
+          <p class="text-sm text-gray-500 mt-1">Please be specific and detailed</p>
+        </div>
+
+        <!-- Suggestions -->
+        <div>
+          <label class="block text-gray-700 font-semibold mb-2">Suggestions for Improvement (Optional)</label>
+          <textarea name="suggestion" rows="4"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="How can we make your experience better?"></textarea>
+        </div>
+
+        <!-- Info Box -->
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <p class="text-sm text-blue-800">
+            <strong>💡 Your feedback matters!</strong> We read every submission and use your insights to improve our services. 
+            Our team will review your feedback and may reach out if we need more information.
+          </p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex gap-4">
+          <button type="submit" 
+            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition shadow-md hover:shadow-lg">
+            Submit Feedback
+          </button>
+          <a href="/dashboard" 
+            class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 rounded-lg text-center transition">
+            Cancel
+          </a>
+        </div>
+      </form>
+
+      <!-- View Previous Feedback -->
+      <div class="mt-8 pt-8 border-t border-gray-200">
+        <a href="/my-feedback" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+          </svg>
+          View My Previous Feedback
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Star rating functionality
+    const stars = document.querySelectorAll('.star');
+    const ratingText = document.getElementById('ratingText');
+    const ratingMessages = {
+      1: '⭐ Poor - We need to improve',
+      2: '⭐⭐ Fair - Below expectations',
+      3: '⭐⭐⭐ Good - Met expectations',
+      4: '⭐⭐⭐⭐ Very Good - Exceeded expectations',
+      5: '⭐⭐⭐⭐⭐ Excellent - Outstanding experience!'
+    };
+
+    stars.forEach(star => {
+      star.addEventListener('click', function() {
+        const rating = this.dataset.rating;
+        
+        // Update radio button
+        document.getElementById('star' + rating).checked = true;
+        
+        // Update star colors
+        stars.forEach((s, index) => {
+          if (index < rating) {
+            s.classList.remove('text-gray-300');
+            s.classList.add('text-yellow-400');
+          } else {
+            s.classList.remove('text-yellow-400');
+            s.classList.add('text-gray-300');
+          }
+        });
+        
+        // Update text
+        ratingText.textContent = ratingMessages[rating];
+        ratingText.classList.add('font-semibold', 'text-blue-600');
+      });
+
+      // Hover effect
+      star.addEventListener('mouseenter', function() {
+        const rating = this.dataset.rating;
+        stars.forEach((s, index) => {
+          if (index < rating) {
+            s.classList.add('text-yellow-400');
+          }
+        });
+      });
+
+      star.addEventListener('mouseleave', function() {
+        const checkedRating = document.querySelector('input[name="rating"]:checked');
+        if (checkedRating) {
+          const rating = checkedRating.value;
+          stars.forEach((s, index) => {
+            if (index < rating) {
+              s.classList.add('text-yellow-400');
+              s.classList.remove('text-gray-300');
+            } else {
+              s.classList.remove('text-yellow-400');
+              s.classList.add('text-gray-300');
+            }
+          });
+        } else {
+          stars.forEach(s => {
+            s.classList.remove('text-yellow-400');
+            s.classList.add('text-gray-300');
+          });
+        }
+      });
+    });
+  </script>
+
+{{> footer}}

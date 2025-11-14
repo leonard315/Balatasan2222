@@ -1,0 +1,73 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "bookings": "Aking mga Reserbasyon",
+    "amenities": "Mga Pasilidad",
+    "profile": "Profile",
+    "contact": "Makipag-ugnayan",
+    "logout": "Mag-logout",
+    "admin": "Admin Panel"
+  },
+  "dashboard": {
+    "welcome": "Maligayang pagbabalik",
+    "ready": "Handa ka na bang magplano ng iyong susunod na bakasyon sa dalampasigan?",
+    "myBookings": "Aking mga Reserbasyon",
+    "rewardsPoints": "Puntos ng Gantimpala",
+    "memberSince": "Miyembro Mula",
+    "noBookings": "Walang aktibong reserbasyon",
+    "startEarning": "Magsimulang kumita ng gantimpala!",
+    "today": "Ngayon",
+    "welcomeFamily": "Maligayang pagdating sa aming pamilya!",
+    "quickActions": "Mabilis na Aksyon",
+    "newBooking": "Bagong Reserbasyon",
+    "reserveRoom": "Mag-reserba ng kwarto",
+    "viewReservations": "Tingnan ang mga reserbasyon",
+    "updateInfo": "I-update ang impormasyon",
+    "getSupport": "Kumuha ng suporta",
+    "resortAmenities": "Mga Pasilidad ng Resort"
+  },
+  "booking": {
+    "title": "Bagong Reserbasyon",
+    "bookingDate": "Petsa ng Reserbasyon",
+    "endDate": "Petsa ng Pagtatapos",
+    "selectActivity": "Pumili ng Aktibidad sa Tubig",
+    "chooseAdventure": "Pumili ng iyong pakikipagsapalaran",
+    "numberOfGuests": "Bilang ng mga Bisita",
+    "enterGuests": "Ilagay ang bilang ng mga kalahok",
+    "specialRequests": "Mga Espesyal na Kahilingan",
+    "anyRequirements": "Anumang espesyal na pangangailangan...",
+    "submit": "Isumite ang Reserbasyon",
+    "cancel": "Kanselahin"
+  },
+  "payment": {
+    "method": "Paraan ng Pagbabayad",
+    "gcash": "GCash",
+    "paymaya": "PayMaya",
+    "creditCard": "Credit/Debit Card",
+    "cash": "Cash sa Pagdating",
+    "gcashWallet": "Magbayad gamit ang GCash mobile wallet",
+    "paymayaWallet": "Magbayad gamit ang PayMaya wallet",
+    "cards": "Visa, Mastercard, o iba pang cards",
+    "payOnArrival": "Magbayad kapag dumating ka sa resort",
+    "sendPaymentTo": "Magpadala ng bayad sa:",
+    "accountName": "Pangalan ng Account: Balatasan Beach Resort",
+    "afterBooking": "Pagkatapos ng reserbasyon, maaari mong i-upload ang patunay ng bayad mula sa \"Aking mga Reserbasyon\" page"
+  },
+  "weather": {
+    "current": "Kasalukuyang Panahon",
+    "temperature": "Temperatura",
+    "conditions": "Kondisyon",
+    "windSpeed": "Bilis ng Hangin",
+    "humidity": "Halumigmig",
+    "goodConditions": "Magandang kondisyon para sa mga aktibidad sa tubig!",
+    "moderateConditions": "Katamtamang kondisyon - ang ilang aktibidad ay maaaring limitado",
+    "poorConditions": "Masamang kondisyon - hindi inirerekomenda ang mga aktibidad sa tubig",
+    "forecast": "Taya ng Panahon"
+  },
+  "amenities": {
+    "floatingCottage": "Lumulutang na Kubo",
+    "waterActivities": "Mga Aktibidad sa Tubig",
+    "tourPackages": "Mga Pakete ng Tour",
+    "learnMore": "Matuto pa"
+  }
+}

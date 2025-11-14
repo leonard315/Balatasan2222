@@ -1,0 +1,73 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "bookings": "My Bookings",
+    "amenities": "Amenities",
+    "profile": "Profile",
+    "contact": "Contact",
+    "logout": "Logout",
+    "admin": "Admin Panel"
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "ready": "Ready to plan your next beach getaway?",
+    "myBookings": "My Bookings",
+    "rewardsPoints": "Rewards Points",
+    "memberSince": "Member Since",
+    "noBookings": "No active bookings",
+    "startEarning": "Start earning rewards!",
+    "today": "Today",
+    "welcomeFamily": "Welcome to our family!",
+    "quickActions": "Quick Actions",
+    "newBooking": "New Booking",
+    "reserveRoom": "Reserve a room",
+    "viewReservations": "View reservations",
+    "updateInfo": "Update info",
+    "getSupport": "Get support",
+    "resortAmenities": "Resort Amenities"
+  },
+  "booking": {
+    "title": "New Booking",
+    "bookingDate": "Booking Date",
+    "endDate": "End Date",
+    "selectActivity": "Select Water Activity",
+    "chooseAdventure": "Choose your adventure",
+    "numberOfGuests": "Number of Guests",
+    "enterGuests": "Enter number of participants",
+    "specialRequests": "Special Requests",
+    "anyRequirements": "Any special requirements...",
+    "submit": "Submit Booking",
+    "cancel": "Cancel"
+  },
+  "payment": {
+    "method": "Payment Method",
+    "gcash": "GCash",
+    "paymaya": "PayMaya",
+    "creditCard": "Credit/Debit Card",
+    "cash": "Cash on Arrival",
+    "gcashWallet": "Pay via GCash mobile wallet",
+    "paymayaWallet": "Pay using PayMaya wallet",
+    "cards": "Visa, Mastercard, or other cards",
+    "payOnArrival": "Pay when you arrive at the resort",
+    "sendPaymentTo": "Send payment to:",
+    "accountName": "Account Name: Balatasan Beach Resort",
+    "afterBooking": "After booking, you can upload your payment proof from \"My Bookings\" page"
+  },
+  "weather": {
+    "current": "Current Weather",
+    "temperature": "Temperature",
+    "conditions": "Conditions",
+    "windSpeed": "Wind Speed",
+    "humidity": "Humidity",
+    "goodConditions": "Good conditions for water activities!",
+    "moderateConditions": "Moderate conditions - some activities may be limited",
+    "poorConditions": "Poor conditions - water activities not recommended",
+    "forecast": "Weather Forecast"
+  },
+  "amenities": {
+    "floatingCottage": "Floating Cottage",
+    "waterActivities": "Water Activities",
+    "tourPackages": "Tour Packages",
+    "learnMore": "Learn more"
+  }
+}

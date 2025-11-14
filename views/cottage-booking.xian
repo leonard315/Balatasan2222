@@ -1,0 +1,261 @@
+{{> head}}
+<body class="bg-gradient-to-br from-blue-50 to-cyan-50 min-h-screen">
+  {{> navbar}}
+
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <a href="/amenities/floating-cottage" class="inline-flex items-center text-blue-600 hover:text-blue-800 mb-4 transition">
+      <span class="mr-2">←</span> Back to Floating Cottage
+    </a>
+    <div class="bg-white rounded-xl shadow-lg p-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6">🛖 Reserve Floating Cottage</h2>
+
+      {{#if error_msg}}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          {{error_msg}}
+        </div>
+      {{/if}}
+
+      <form method="POST" action="/bookings/cottage">
+        <div class="mb-6">
+          <label class="block text-gray-700 font-semibold mb-2">Reservation Date</label>
+          <input type="date" name="checkIn" required 
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+        </div>
+
+        <!-- Cottage Preview - Full Width Image Only -->
+        <div id="cottagePreview" class="hidden mb-6 -mx-8 rounded-none overflow-hidden shadow-2xl">
+          <img id="cottageImage" src="" alt="Cottage Preview" class="w-full h-96 object-cover" />
+          <div class="mx-8 bg-gradient-to-r from-blue-50 to-cyan-50 p-6 rounded-b-lg">
+            <h3 id="cottageTitle" class="text-2xl font-bold text-gray-800 mb-2"></h3>
+            <p id="cottageDescription" class="text-sm text-gray-600 mb-3"></p>
+            <div class="flex items-center justify-between">
+              <p id="cottagePrice" class="text-3xl font-bold text-blue-600"></p>
+              <span class="text-sm text-gray-600">✨ Includes boat transfer & life jackets</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-gray-700 font-semibold mb-2">Cottage Type</label>
+          <select name="duration" id="cottageType" required onchange="updateCottagePrice()"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+            <option value="">Select cottage type</option>
+            <option value="standard" data-price="1500" data-image="https://scontent.fmnl13-1.fna.fbcdn.net/v/t39.30808-6/512745884_122124456332862283_3808859517808795231_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHZghmqKuEQuA3Oma23MeNjEkx28tKklgISTHby0qSWApwt9M7mQ8c8nYAAGmbYdIai2JM_X6tifHJIqsGZu3NK&_nc_ohc=jdfPbdDmKssQ7kNvwGbqdSQ&_nc_oc=AdmxXyJU8rnmPFZynjrEOvoRbfxVmMiGiYA9gMXdbm8gnvRb_kclAg3iKW2IGqdmu5c&_nc_zt=23&_nc_ht=scontent.fmnl13-1.fna&_nc_gid=Pir2q87IGwHuuNmj8gMF9g&oh=00_AfipRqa1P4jSoEo39fAEkoqsz8Jgv5MAehalgP3NBekkKw&oe=691AC132" data-desc="Perfect for couples or small groups. Cozy bamboo cottage with basic amenities.">Standard - ₱1,500</option>
+            <option value="teenager" data-price="2000" data-image="https://scontent.fmnl13-4.fna.fbcdn.net/v/t39.30808-6/513022982_122124455792862283_3046519097759216866_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeGkFPaJ1-SD5gtfmRnpE62nhubaEOj8nE6G5toQ6PycTqjdzioVnyfnVaxhswe9kXPAtZoYhZKUlVxHlrZ9k-CV&_nc_ohc=y2ifksNNefkQ7kNvwGjGgpT&_nc_oc=AdmYcjqtpaWS3edYmel2Iuc9RJJyZ_gg8rkaqrJ7bN0VrHajbevAcy9VULDzyYET7Og&_nc_zt=23&_nc_ht=scontent.fmnl13-4.fna&_nc_gid=H2DvQmSkaU6VX7ZTq6L24w&oh=00_AfjdzXwz_jNEesW17cBt6mAPplhd0u75Q-osHZw1AEBLqQ&oe=691AB6A7" data-desc="Ideal for teenagers and children. Fun and spacious with colorful blue design. Features vibrant colors and playful atmosphere!">Teenager/Children - ₱2,000</option>
+            <option value="family" data-price="2500" data-image="https://scontent.fmnl13-4.fna.fbcdn.net/v/t39.30808-6/511157411_122124457682862283_2938367236927865177_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFnTOnsliSdDDOuTKT4tuO2CfbpRodUNIoJ9ulGh1Q0ip02uxo8CtdVFrvWqZEnpHzlDXrdSVzvscHXoQqM6DaL&_nc_ohc=HrJyWxO3YwQQ7kNvwHkJH90&_nc_oc=AdmZQ2m5XdvEAPIJbVLyQiIiTzJtirqlHBCqCAs7s47I2YAKnfLGfb9-ka4486rO9v4&_nc_zt=23&_nc_ht=scontent.fmnl13-4.fna&_nc_gid=53lOw_fhFM3LmwVjLZ1CWg&oh=00_AfhWBP2r4F3Pn22TV4Zor5A1BjLqoQoeNIZU26mhMGbOXg&oe=691AA1A1" data-desc="Spacious family cottage with nipa roof, bamboo construction, and room for up to 8 people. Perfect for family bonding!">Family - ₱2,500</option>
+          </select>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-gray-700 font-semibold mb-2">Number of Guests</label>
+          <input type="number" name="guests" min="1" max="8" required 
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Maximum 8 persons" />
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-gray-700 font-semibold mb-2">Special Requests (Optional)</label>
+          <textarea name="notes" rows="3" 
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Food delivery, snorkeling equipment, etc."></textarea>
+        </div>
+
+        <!-- Price Summary -->
+        <div id="priceSummary" class="hidden bg-blue-50 rounded-lg p-6 mb-6">
+          <h3 class="text-lg font-bold text-gray-800 mb-3">💰 Price Summary</h3>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-700">Cottage Rental</span>
+            <span id="totalPrice" class="text-2xl font-bold text-blue-600"></span>
+          </div>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">💳 Payment Method</h3>
+          
+          <div class="space-y-3 mb-4">
+            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition" onclick="showPaymentDetails('gcash')">
+              <input type="radio" name="paymentMethod" value="gcash" required class="w-5 h-5 text-blue-600" />
+              <div class="ml-3 flex-1">
+                <div class="flex items-center">
+                  <span class="text-2xl mr-2">💙</span>
+                  <span class="font-semibold text-gray-800">GCash</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-1">Pay via GCash mobile wallet</p>
+              </div>
+            </label>
+
+            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition" onclick="showPaymentDetails('paymaya')">
+              <input type="radio" name="paymentMethod" value="paymaya" required class="w-5 h-5 text-blue-600" />
+              <div class="ml-3 flex-1">
+                <div class="flex items-center">
+                  <span class="text-2xl mr-2">💚</span>
+                  <span class="font-semibold text-gray-800">PayMaya</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-1">Pay using PayMaya wallet</p>
+              </div>
+            </label>
+
+            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition" onclick="showPaymentDetails('credit-card')">
+              <input type="radio" name="paymentMethod" value="credit-card" required class="w-5 h-5 text-blue-600" />
+              <div class="ml-3 flex-1">
+                <div class="flex items-center">
+                  <span class="text-2xl mr-2">💳</span>
+                  <span class="font-semibold text-gray-800">Credit/Debit Card</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-1">Visa, Mastercard, or other cards</p>
+              </div>
+            </label>
+
+            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition" onclick="showPaymentDetails('cash')">
+              <input type="radio" name="paymentMethod" value="cash" required class="w-5 h-5 text-blue-600" />
+              <div class="ml-3 flex-1">
+                <div class="flex items-center">
+                  <span class="text-2xl mr-2">💵</span>
+                  <span class="font-semibold text-gray-800">Cash on Arrival</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-1">Pay when you arrive at the resort</p>
+              </div>
+            </label>
+          </div>
+
+          <!-- Payment Details Section (Hidden by default) -->
+          <div id="paymentDetailsSection" class="hidden mt-4">
+            <!-- GCash Details -->
+            <div id="gcashDetails" class="payment-details hidden bg-white rounded-lg p-4 border-2 border-blue-300">
+              <h4 class="font-bold text-gray-800 mb-3">💙 GCash Payment Details</h4>
+              <div class="bg-blue-50 p-3 rounded mb-3">
+                <p class="text-sm font-semibold text-gray-800">Send payment to:</p>
+                <p class="text-3xl font-bold text-blue-600 mb-1">09171234567</p>
+                <p class="text-sm text-gray-600">Account Name: Balatasan Beach Resort</p>
+              </div>
+              <div class="bg-yellow-50 p-3 rounded">
+                <p class="text-sm text-gray-700">💡 After booking, you can upload your payment proof from "My Bookings" page</p>
+              </div>
+            </div>
+
+            <!-- PayMaya Details -->
+            <div id="paymayaDetails" class="payment-details hidden bg-white rounded-lg p-4 border-2 border-green-300">
+              <h4 class="font-bold text-gray-800 mb-3">💚 PayMaya Payment Details</h4>
+              <div class="bg-green-50 p-3 rounded mb-3">
+                <p class="text-sm font-semibold text-gray-800">Send payment to:</p>
+                <p class="text-lg font-bold text-green-600">09171234567</p>
+                <p class="text-sm text-gray-600">Account Name: Balatasan Beach Resort</p>
+              </div>
+              <div class="mb-3">
+                <label class="block text-gray-700 font-semibold mb-2">Reference Number *</label>
+                <input type="text" name="referenceNumber" 
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                  placeholder="Enter PayMaya reference number" />
+              </div>
+              <div class="mb-3">
+                <label class="block text-gray-700 font-semibold mb-2">Upload Proof of Payment *</label>
+                <input type="file" name="proofOfPayment" accept="image/*"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" />
+                <p class="text-xs text-gray-500 mt-1">Upload screenshot of payment confirmation</p>
+              </div>
+            </div>
+
+            <!-- Credit Card Details -->
+            <div id="creditCardDetails" class="payment-details hidden bg-white rounded-lg p-4 border-2 border-purple-300">
+              <h4 class="font-bold text-gray-800 mb-3">💳 Credit/Debit Card Payment</h4>
+              <div class="bg-purple-50 p-3 rounded mb-3">
+                <p class="text-sm text-gray-700">A payment link will be sent to your email after booking confirmation.</p>
+              </div>
+              <p class="text-sm text-gray-600">No additional information needed at this time.</p>
+            </div>
+
+            <!-- Cash Details -->
+            <div id="cashDetails" class="payment-details hidden bg-white rounded-lg p-4 border-2 border-yellow-300">
+              <h4 class="font-bold text-gray-800 mb-3">💵 Cash on Arrival</h4>
+              <div class="bg-yellow-50 p-3 rounded mb-3">
+                <p class="text-sm text-gray-700">You can pay in cash when you arrive at the resort.</p>
+                <p class="text-sm text-gray-700 mt-2"><strong>Note:</strong> A 50% deposit may be required via other payment methods to confirm your booking.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg p-4 mt-4">
+            <p class="text-sm text-gray-700 mb-2"><strong>📌 Payment Instructions:</strong></p>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• A 50% deposit is required to confirm your cottage reservation</li>
+              <li>• Upload proof of payment after making the deposit</li>
+              <li>• Full payment must be completed before your reservation date</li>
+              <li>• Cancellations made 3 days before reservation are fully refundable</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <button type="submit" 
+            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition">
+            Submit Reservation
+          </button>
+          <a href="/amenities/floating-cottage" 
+            class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 rounded-lg text-center transition">
+            Cancel
+          </a>
+        </div>
+      </form>
+
+      <script>
+        function showPaymentDetails(method) {
+          // Hide all payment details
+          document.querySelectorAll('.payment-details').forEach(el => el.classList.add('hidden'));
+          
+          // Show payment details section
+          document.getElementById('paymentDetailsSection').classList.remove('hidden');
+          
+          // Show selected payment method details
+          const detailsMap = {
+            'gcash': 'gcashDetails',
+            'paymaya': 'paymayaDetails',
+            'credit-card': 'creditCardDetails',
+            'cash': 'cashDetails'
+          };
+          
+          const detailsId = detailsMap[method];
+          if (detailsId) {
+            document.getElementById(detailsId).classList.remove('hidden');
+          }
+        }
+
+        function updateCottagePrice() {
+          const select = document.getElementById('cottageType');
+          const selectedOption = select.options[select.selectedIndex];
+          const priceSummary = document.getElementById('priceSummary');
+          const totalPrice = document.getElementById('totalPrice');
+          const preview = document.getElementById('cottagePreview');
+          const image = document.getElementById('cottageImage');
+          const title = document.getElementById('cottageTitle');
+          const description = document.getElementById('cottageDescription');
+          const priceDisplay = document.getElementById('cottagePrice');
+
+          if (selectedOption.value) {
+            const price = selectedOption.getAttribute('data-price');
+            const imageUrl = selectedOption.getAttribute('data-image');
+            const desc = selectedOption.getAttribute('data-desc');
+            const cottageName = selectedOption.text.split(' - ')[0];
+
+            // Update preview
+            image.src = imageUrl;
+            title.textContent = cottageName;
+            description.textContent = desc;
+            priceDisplay.textContent = '₱' + price;
+            preview.classList.remove('hidden');
+
+            // Update price summary
+            totalPrice.textContent = '₱' + price;
+            priceSummary.classList.remove('hidden');
+
+            // Scroll to preview
+            preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          } else {
+            priceSummary.classList.add('hidden');
+            preview.classList.add('hidden');
+          }
+        }
+      </script>
+    </div>
+  </div>
+{{> footer}}

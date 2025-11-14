@@ -1,0 +1,6 @@
+<footer class="mt-8 py-4 text-center text-gray-500 text-sm">
+  &copy; 2025 XianFire Framework — Built with ❤️ at Mindoro State University
+</footer>
+<script src="/js/weather.js"></script>
+</body>
+</html>

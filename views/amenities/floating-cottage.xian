@@ -1,0 +1,217 @@
+{{> head}}
+<body class="bg-gradient-to-br from-blue-50 to-cyan-50 min-h-screen">
+  {{> navbar}}
+
+  <div class="max-w-5xl mx-auto px-4 py-8">
+    <a href="/amenities" class="inline-flex items-center text-blue-600 hover:text-blue-800 mb-4 transition">
+      <span class="mr-2">←</span> Back to Amenities
+    </a>
+
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+      <!-- Hero Image -->
+      <div class="relative h-96 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200&h=600&fit=crop" 
+             alt="Floating Cottage" 
+             class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+          <div class="p-8 text-white">
+            <h1 class="text-5xl font-bold mb-2">Balatasan Floating Cottage</h1>
+            <p class="text-xl">Experience paradise on water</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-8">
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">Balatasan Floating Cottage</h1>
+        <p class="text-lg text-gray-600 mb-6">Experience the ultimate relaxation in our authentic Balatasan floating cottages - traditional bamboo and nipa huts built over the crystal-clear waters of Verde Island Passage. Perfect for families, groups, and special occasions.</p>
+
+        <!-- Image Gallery -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div class="relative rounded-lg overflow-hidden h-64 group cursor-pointer">
+            <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=400&fit=crop" 
+                 alt="Floating Cottage View" 
+                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition flex items-center justify-center">
+              <span class="text-white font-semibold">Cottage View</span>
+            </div>
+          </div>
+          <div class="relative rounded-lg overflow-hidden h-64 group cursor-pointer">
+            <img src="https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=600&h=400&fit=crop" 
+                 alt="Crystal Clear Water" 
+                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition flex items-center justify-center">
+              <span class="text-white font-semibold">Crystal Waters</span>
+            </div>
+          </div>
+          <div class="relative rounded-lg overflow-hidden h-64 group cursor-pointer">
+            <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=400&fit=crop" 
+                 alt="Island Paradise" 
+                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition flex items-center justify-center">
+              <span class="text-white font-semibold">Island Paradise</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Features -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div class="bg-blue-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-3">Cottage Features</h3>
+            <ul class="space-y-2 text-gray-700">
+              <li class="flex items-center"><span class="mr-2">✓</span> Traditional bamboo & nipa construction</li>
+              <li class="flex items-center"><span class="mr-2">✓</span> Spacious 4x6 meter platform</li>
+              <li class="flex items-center"><span class="mr-2">✓</span> 360° panoramic ocean views</li>
+              <li class="flex items-center"><span class="mr-2">✓</span> Direct ladder access to water</li>
+              <li class="flex items-center"><span class="mr-2">✓</span> Native nipa palm roof for shade</li>
+              <li class="flex items-center"><span class="mr-2">✓</span> Bamboo benches and tables</li>
+              <li class="flex items-center"><span class="mr-2">✓</span> Life jackets provided</li>
+            </ul>
+          </div>
+
+          <div class="bg-cyan-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-3">Rental Information</h3>
+            <ul class="space-y-2 text-gray-700">
+              <li class="flex items-center"><span class="mr-2">💰</span> ₱1,500 for 4 hours (half day)</li>
+              <li class="flex items-center"><span class="mr-2">💰</span> ₱2,500 for 8 hours (whole day)</li>
+              <li class="flex items-center"><span class="mr-2">💰</span> ₱3,500 overnight stay</li>
+              <li class="flex items-center"><span class="mr-2">👥</span> Capacity: 6-8 persons</li>
+              <li class="flex items-center"><span class="mr-2">🕐</span> Available 6:00 AM - 7:00 PM</li>
+              <li class="flex items-center"><span class="mr-2">📅</span> Advance booking required</li>
+              <li class="flex items-center"><span class="mr-2">🚤</span> Boat transfer included</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Amenities -->
+        <div class="bg-gradient-to-r from-blue-100 to-cyan-100 rounded-lg p-6 mb-8">
+          <h3 class="text-xl font-bold text-gray-800 mb-4">What's Included</h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="text-center">
+              <span class="text-3xl block mb-2">🪑</span>
+              <p class="text-sm font-semibold">Seating Area</p>
+            </div>
+            <div class="text-center">
+              <span class="text-3xl block mb-2">🏊‍♂️</span>
+              <p class="text-sm font-semibold">Swimming Access</p>
+            </div>
+            <div class="text-center">
+              <span class="text-3xl block mb-2">☂️</span>
+              <p class="text-sm font-semibold">Shade Cover</p>
+            </div>
+            <div class="text-center">
+              <span class="text-3xl block mb-2">🎣</span>
+              <p class="text-sm font-semibold">Fishing Allowed</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- What Makes It Special -->
+        <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg p-6 mb-8">
+          <h3 class="text-xl font-bold text-gray-800 mb-4">🌟 What Makes Balatasan Floating Cottage Special</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h4 class="font-semibold text-gray-800 mb-2">🌊 Verde Island Passage Location</h4>
+              <p class="text-sm text-gray-600">Located in the heart of the world's marine biodiversity center with crystal-clear turquoise waters</p>
+            </div>
+            <div>
+              <h4 class="font-semibold text-gray-800 mb-2">🐠 Marine Life Viewing</h4>
+              <p class="text-sm text-gray-600">Watch colorful fish swimming beneath the cottage through the clear water</p>
+            </div>
+            <div>
+              <h4 class="font-semibold text-gray-800 mb-2">🏝️ Authentic Experience</h4>
+              <p class="text-sm text-gray-600">Traditional Filipino floating cottage design using sustainable local materials</p>
+            </div>
+            <div>
+              <h4 class="font-semibold text-gray-800 mb-2">🌅 Stunning Views</h4>
+              <p class="text-sm text-gray-600">Unobstructed views of mountains, islands, and spectacular sunsets</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activities -->
+        <div class="bg-blue-50 rounded-lg p-6 mb-8">
+          <h3 class="text-xl font-bold text-gray-800 mb-4">Perfect For</h3>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="flex items-start">
+              <span class="text-2xl mr-3">💑</span>
+              <div>
+                <h4 class="font-bold text-gray-800">Romantic Getaway</h4>
+                <p class="text-sm text-gray-600">Private and intimate setting</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <span class="text-2xl mr-3">👨‍👩‍👧‍👦</span>
+              <div>
+                <h4 class="font-bold text-gray-800">Family Bonding</h4>
+                <p class="text-sm text-gray-600">Quality time with loved ones</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <span class="text-2xl mr-3">🎉</span>
+              <div>
+                <h4 class="font-bold text-gray-800">Celebrations</h4>
+                <p class="text-sm text-gray-600">Birthdays, anniversaries</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <span class="text-2xl mr-3">📸</span>
+              <div>
+                <h4 class="font-bold text-gray-800">Photo Sessions</h4>
+                <p class="text-sm text-gray-600">Instagram-worthy views</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Services -->
+        <div class="bg-gradient-to-r from-cyan-50 to-blue-50 rounded-lg p-6 mb-8">
+          <h3 class="text-xl font-bold text-gray-800 mb-4">Add-On Services</h3>
+          <div class="space-y-3">
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="font-semibold text-gray-800">Food & Beverage Delivery</p>
+                <p class="text-sm text-gray-600">Order from our restaurant to your cottage</p>
+              </div>
+              <span class="text-blue-600 font-semibold">Available</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="font-semibold text-gray-800">Snorkeling Equipment</p>
+                <p class="text-sm text-gray-600">Explore marine life around the cottage</p>
+              </div>
+              <span class="text-blue-600 font-semibold">₱300/set</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="font-semibold text-gray-800">Fishing Gear Rental</p>
+                <p class="text-sm text-gray-600">Try your luck at fishing</p>
+              </div>
+              <span class="text-blue-600 font-semibold">₱200/set</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Important Notes -->
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 mb-8">
+          <h3 class="text-lg font-bold text-gray-800 mb-3">⚠️ Important Notes</h3>
+          <ul class="space-y-2 text-sm text-gray-700">
+            <li>• Life jackets are mandatory for non-swimmers</li>
+            <li>• Children must be supervised by adults at all times</li>
+            <li>• No glass containers allowed on the cottage</li>
+            <li>• Please keep the cottage clean and dispose of trash properly</li>
+            <li>• Cottage availability depends on weather conditions</li>
+          </ul>
+        </div>
+
+        <!-- CTA -->
+        <div class="bg-blue-600 text-white rounded-lg p-6 text-center">
+          <h3 class="text-2xl font-bold mb-2">Experience Floating Paradise</h3>
+          <p class="mb-4">Reserve your floating cottage today and create unforgettable memories!</p>
+          <a href="/bookings/cottage" class="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-50 transition shadow-lg">
+            🛖 Reserve Floating Cottage
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{{> footer}}

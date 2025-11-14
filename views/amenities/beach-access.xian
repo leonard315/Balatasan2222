@@ -1,0 +1,194 @@
+{{> head}}
+<body class="bg-gradient-to-br from-yellow-50 to-orange-50 min-h-screen">
+  {{> navbar}}
+
+  <div class="max-w-5xl mx-auto px-4 py-8">
+    <a href="/amenities" class="inline-flex items-center text-orange-600 hover:text-orange-800 mb-4 transition">
+      <span class="mr-2">←</span> Back to Amenities
+    </a>
+
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+      <div class="bg-gradient-to-r from-yellow-400 to-orange-500 h-64 flex items-center justify-center">
+        <span class="text-9xl">🏖️</span>
+      </div>
+
+      <div class="p-8">
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">Our Tour Packages</h1>
+        <p class="text-lg text-gray-600 mb-6">Explore the natural wonders surrounding Balatasan. Adventure awaits!</p>
+
+        <!-- Booking Information -->
+        <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg p-8 mb-8 text-center">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">Ready to Explore?</h3>
+          <p class="text-gray-600 mb-6">Book your island adventure through our booking system. Choose from 5 amazing tour packages!</p>
+          <a href="/bookings/new" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition shadow-lg hover:shadow-xl">
+            📅 Book Your Island Tour Now
+          </a>
+        </div>
+
+        <!-- Tour Packages Grid (Hidden - moved to booking) -->
+        <div class="hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <!-- Aslom & Silahaf Island Hopping -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+            <div class="bg-gradient-to-br from-cyan-400 to-blue-500 h-48 flex items-center justify-center">
+              <span class="text-6xl">🏝️</span>
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-xl font-bold text-gray-800">Aslom & Silahaf Island Hopping</h3>
+                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Island hopping</span>
+              </div>
+              <p class="text-sm text-gray-600 mb-4">Visit the beautiful sandbar of Aslom Island and the pristine Silahaf Island. Enjoy a freshly prepared lunch in a secluded beach.</p>
+              <div class="flex items-center text-sm text-gray-600 mb-4">
+                <span class="mr-4">⭐ 4.5 (213)</span>
+                <span>⏱️ 5 hours</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="text-2xl font-bold text-blue-600">₱1,200</p>
+                  <p class="text-xs text-gray-500">per person</p>
+                </div>
+                <a href="/bookings/new?type=tours&tour=aslom-silahaf" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Target Island Adventure -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+            <div class="bg-gradient-to-br from-green-400 to-cyan-500 h-48 flex items-center justify-center">
+              <span class="text-6xl">🏖️</span>
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-xl font-bold text-gray-800">Target Island Adventure</h3>
+                <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Island hopping</span>
+              </div>
+              <p class="text-sm text-gray-600 mb-4">Discover the hidden gem of Target Island, with its crystal clear waters and untouched nature. Perfect for a day of swimming and relaxation.</p>
+              <div class="flex items-center text-sm text-gray-600 mb-4">
+                <span class="mr-4">⭐ 4.7 (150)</span>
+                <span>⏱️ 4 hours</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="text-2xl font-bold text-green-600">₱1,000</p>
+                  <p class="text-xs text-gray-500">per person</p>
+                </div>
+                <a href="/bookings/new?type=tours&tour=target-island" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm transition">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Buyayao Island Marine Sanctuary -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+            <div class="bg-gradient-to-br from-blue-400 to-purple-500 h-48 flex items-center justify-center">
+              <span class="text-6xl">🤿</span>
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-xl font-bold text-gray-800">Buyayao Island Marine Sanctuary</h3>
+                <span class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">Snorkeling</span>
+              </div>
+              <p class="text-sm text-gray-600 mb-4">Explore the rich marine biodiversity of Buyayao Island. A must-visit for snorkelers and nature lovers alike.</p>
+              <div class="flex items-center text-sm text-gray-600 mb-4">
+                <span class="mr-4">⭐ 4.8 (180)</span>
+                <span>⏱️ 6 hours</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="text-2xl font-bold text-purple-600">₱1,500</p>
+                  <p class="text-xs text-gray-500">per person</p>
+                </div>
+                <a href="/bookings/new?type=tours&tour=buyayao" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm transition">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Suguicay Island Getaway -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+            <div class="bg-gradient-to-br from-teal-400 to-blue-500 h-48 flex items-center justify-center">
+              <span class="text-6xl">🌴</span>
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-xl font-bold text-gray-800">Suguicay Island Getaway</h3>
+                <span class="px-2 py-1 bg-teal-100 text-teal-800 text-xs rounded-full">Island hopping</span>
+              </div>
+              <p class="text-sm text-gray-600 mb-4">Relax on the long, white sandbar of Suguicay Island. A perfect spot for sunbathing, swimming, and enjoying the serene atmosphere.</p>
+              <div class="flex items-center text-sm text-gray-600 mb-4">
+                <span class="mr-4">⭐ 4.6 (112)</span>
+                <span>⏱️ 4 hours</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="text-2xl font-bold text-teal-600">₱900</p>
+                  <p class="text-xs text-gray-500">per person</p>
+                </div>
+                <a href="/bookings/new?type=tours&tour=suguicay" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg text-sm transition">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Silad Island Exploration -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+            <div class="bg-gradient-to-br from-cyan-400 to-teal-500 h-48 flex items-center justify-center">
+              <span class="text-6xl">🏝️</span>
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-xl font-bold text-gray-800">Silad Island Exploration</h3>
+                <span class="px-2 py-1 bg-cyan-100 text-cyan-800 text-xs rounded-full">Island hopping</span>
+              </div>
+              <p class="text-sm text-gray-600 mb-4">Discover the tranquil beauty and clear waters of Silad Island, a perfect spot for relaxation and swimming.</p>
+              <div class="flex items-center text-sm text-gray-600 mb-4">
+                <span class="mr-4">⭐ 4.5 (98)</span>
+                <span>⏱️ 4 hours</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="text-2xl font-bold text-cyan-600">₱950</p>
+                  <p class="text-xs text-gray-500">per person</p>
+                </div>
+                <a href="/bookings/new?type=tours&tour=silad" class="bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg text-sm transition">Book Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- What's Included -->
+        <div class="bg-gradient-to-r from-blue-100 to-cyan-100 rounded-lg p-6 mb-8">
+          <h3 class="text-xl font-bold text-gray-800 mb-4">📋 What's Typically Included</h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="text-center">
+              <span class="text-3xl block mb-2">🚤</span>
+              <p class="text-sm font-semibold">Boat Transfer</p>
+            </div>
+            <div class="text-center">
+              <span class="text-3xl block mb-2">🥘</span>
+              <p class="text-sm font-semibold">Lunch</p>
+            </div>
+            <div class="text-center">
+              <span class="text-3xl block mb-2">🤿</span>
+              <p class="text-sm font-semibold">Snorkel Gear</p>
+            </div>
+            <div class="text-center">
+              <span class="text-3xl block mb-2">👨‍✈️</span>
+              <p class="text-sm font-semibold">Tour Guide</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-lg p-6 mb-6">
+          <h3 class="text-xl font-bold mb-3">🌟 Verde Island Passage</h3>
+          <p class="text-cyan-100">Experience the world's marine biodiversity center! Verde Island Passage is recognized as the "Center of the Center of Marine Shorefish Biodiversity" with over 60% of the world's known shore fish species!</p>
+        </div>
+
+        <div class="bg-blue-600 text-white rounded-lg p-6 text-center">
+          <h3 class="text-2xl font-bold mb-2">Ready for an Island Adventure?</h3>
+          <p class="mb-4">Book your tour package today and explore the beautiful islands around Balatasan!</p>
+          <a href="/contact" class="inline-block bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition">
+            Inquire & Book Tours
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{{> footer}}

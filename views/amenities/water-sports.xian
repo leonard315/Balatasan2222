@@ -1,0 +1,215 @@
+{{> head}}
+<body class="bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen">
+  {{> navbar}}
+
+  <div class="max-w-5xl mx-auto px-4 py-8">
+    <a href="/amenities" class="inline-flex items-center text-purple-600 hover:text-purple-800 mb-4 transition">
+      <span class="mr-2">←</span> Back to Amenities
+    </a>
+
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+      <!-- Hero Image -->
+      <div class="relative h-96 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&h=600&fit=crop" 
+             alt="Water Sports Activities" 
+             class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+          <div class="p-8 text-white">
+            <h1 class="text-5xl font-bold mb-2">Water Activities & Sports</h1>
+            <p class="text-xl">Dive into adventure and excitement!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-8">
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">Water Activities</h1>
+        <p class="text-lg text-gray-600 mb-6">Dive into adventure with our exciting range of water activities and marine experiences!</p>
+
+        <!-- Thrilling Water Activities -->
+        <div class="bg-gradient-to-r from-purple-100 to-pink-100 rounded-lg p-6 mb-8">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">🎢 Thrilling Water Rides</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition">
+              <img src="https://image.made-in-china.com/2f0j00MOkhvzBKSgce/Water-Sport-PVC-8-Seats-Inflatable-Flying-Fish-Banana-Boat.jpg" alt="Flying Fish" class="w-full h-48 object-cover">
+              <div class="p-5">
+                <div class="flex items-center mb-3">
+                  <span class="text-3xl mr-3">🐟</span>
+                  <h4 class="text-xl font-bold text-gray-800">Flying Fish</h4>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">Experience the thrill of flying over the waves!</p>
+                <div class="space-y-1 text-sm">
+                  <p class="text-gray-700"><strong>Capacity:</strong> 3 pax</p>
+                  <p class="text-gray-700"><strong>Duration:</strong> 15 minutes</p>
+                  <p class="text-purple-600 font-bold text-lg">₱1,500</p>
+                  <p class="text-xs text-gray-500">+ ₱500 per additional person</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition">
+              <img src="https://www.coltonyacht.com/storage/uploads/images/202208/24/1661332648_N8hzGip6z0.jpg" alt="Banana Boat" class="w-full h-48 object-cover">
+              <div class="p-5">
+                <div class="flex items-center mb-3">
+                  <span class="text-3xl mr-3">🍌</span>
+                  <h4 class="text-xl font-bold text-gray-800">Banana Boat</h4>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">Fun group ride perfect for families!</p>
+                <div class="space-y-1 text-sm">
+                  <p class="text-gray-700"><strong>Capacity:</strong> 12 pax</p>
+                  <p class="text-gray-700"><strong>Duration:</strong> 15 minutes</p>
+                  <p class="text-pink-600 font-bold text-lg">₱3,000</p>
+                  <p class="text-xs text-gray-500">+ ₱250 per additional person</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition">
+              <img src="https://www.oklilytoys.com/data/watermark/20211026/617819164fb2c.jpg" alt="Hurricane" class="w-full h-48 object-cover">
+              <div class="p-5">
+                <div class="flex items-center mb-3">
+                  <span class="text-3xl mr-3">🌪️</span>
+                  <h4 class="text-xl font-bold text-gray-800">Hurricane</h4>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">Spin and splash in this exciting ride!</p>
+                <div class="space-y-1 text-sm">
+                  <p class="text-gray-700"><strong>Capacity:</strong> 6 pax</p>
+                  <p class="text-gray-700"><strong>Duration:</strong> 15 minutes</p>
+                  <p class="text-purple-600 font-bold text-lg">₱2,000</p>
+                  <p class="text-xs text-gray-500">+ ₱350 per additional person</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition">
+              <img src="https://www.vivovenetia.it/wp-content/uploads/2018/11/sport-in-spiaggia-jesolo.jpeg" alt="Crazy UFO" class="w-full h-48 object-cover">
+              <div class="p-5">
+                <div class="flex items-center mb-3">
+                  <span class="text-3xl mr-3">🛸</span>
+                  <h4 class="text-xl font-bold text-gray-800">Crazy UFO</h4>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">Out-of-this-world water adventure!</p>
+                <div class="space-y-1 text-sm">
+                  <p class="text-gray-700"><strong>Capacity:</strong> 6 pax</p>
+                  <p class="text-gray-700"><strong>Duration:</strong> 15 minutes</p>
+                  <p class="text-purple-600 font-bold text-lg">₱2,000</p>
+                  <p class="text-xs text-gray-500">+ ₱350 per additional person</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition border-2 border-orange-400">
+              <div class="bg-orange-500 text-white text-xs font-bold px-3 py-1 text-center">⚡ NEW ACTIVITY</div>
+              <img src="https://www.jetskitoursperth.com.au/wp-content/uploads/2017/03/Jetski-Tours-66-scaled.jpg" alt="Jet Ski" class="w-full h-48 object-cover">
+              <div class="p-5">
+                <div class="flex items-center mb-3">
+                  <span class="text-3xl mr-3">🚤</span>
+                  <h4 class="text-xl font-bold text-gray-800">Jet Ski</h4>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">High-speed adventure across the waves!</p>
+                <div class="space-y-1 text-sm">
+                  <p class="text-gray-700"><strong>Capacity:</strong> Up to 4 pax</p>
+                  <p class="text-gray-700"><strong>Duration:</strong> Flexible (per minute)</p>
+                  <p class="text-orange-600 font-bold text-lg">₱150/minute</p>
+                  <p class="text-xs text-gray-500">Minimum 5 mins, Maximum 60 mins</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Relaxing Water Activities -->
+        <div class="bg-gradient-to-r from-blue-100 to-cyan-100 rounded-lg p-6 mb-8">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">🚣 Relaxing Water Activities</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition">
+              <img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/0939340e-ea06-42d6-ac88-b01da83718f0.__CR0,0,300,300_PT0_SX300_V1___.jpg" alt="Pedal Boat" class="w-full h-48 object-cover">
+              <div class="p-5">
+                <div class="flex items-center mb-3">
+                  <span class="text-3xl mr-3">🚲</span>
+                  <h4 class="text-xl font-bold text-gray-800">Pedal Boat</h4>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">Leisurely cruise around the bay</p>
+                <div class="space-y-1 text-sm">
+                  <p class="text-gray-700"><strong>Capacity:</strong> 4 pax</p>
+                  <p class="text-gray-700"><strong>Duration:</strong> 1 hour</p>
+                  <p class="text-blue-600 font-bold text-lg">₱500</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition">
+              <img src="https://cdn11.bigcommerce.com/s-878a4/images/stencil/1280x1280/products/1379/2338/sundolphin_canopy__85735.1568130495.jpg?c=2&imbypass=on" alt="Hand Paddle Boat" class="w-full h-48 object-cover">
+              <div class="p-5">
+                <div class="flex items-center mb-3">
+                  <span class="text-3xl mr-3">🛶</span>
+                  <h4 class="text-xl font-bold text-gray-800">Hand Paddle Boat</h4>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">Traditional paddle boat experience</p>
+                <div class="space-y-1 text-sm">
+                  <p class="text-gray-700"><strong>Duration:</strong> 1 hour</p>
+                  <p class="text-cyan-600 font-bold text-lg">₱200</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Additional Water Activities -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="bg-purple-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-3">🤿 Snorkeling</h3>
+            <p class="text-gray-700 mb-3">Explore vibrant coral reefs and marine life</p>
+            <ul class="space-y-1 text-sm text-gray-600">
+              <li>• Equipment rental: ₱300/set</li>
+              <li>• Guided tours available</li>
+              <li>• Best spots mapped</li>
+            </ul>
+          </div>
+
+          <div class="bg-pink-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-3">🎣 Fishing Trips</h3>
+            <p class="text-gray-700 mb-3">Traditional fishing experience</p>
+            <ul class="space-y-1 text-sm text-gray-600">
+              <li>• Morning/Evening trips</li>
+              <li>• Equipment provided</li>
+              <li>• ₱3,000 per boat (4 pax)</li>
+            </ul>
+          </div>
+
+          <div class="bg-purple-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-3">🏊‍♂️ Scuba Diving</h3>
+            <p class="text-gray-700 mb-3">Discover underwater wonders</p>
+            <ul class="space-y-1 text-sm text-gray-600">
+              <li>• PADI certified instructors</li>
+              <li>• Equipment rental available</li>
+              <li>• From ₱3,500 per dive</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg p-6 mb-6">
+          <h3 class="text-xl font-bold mb-3">⚠️ Safety First</h3>
+          <p class="text-purple-100">All water sports activities include safety briefings, life jackets, and are supervised by certified instructors. Weather conditions are monitored daily for your safety.</p>
+        </div>
+
+        <div class="bg-purple-600 text-white rounded-lg p-6 text-center">
+          <h3 class="text-2xl font-bold mb-2">Adventure Awaits!</h3>
+          <p class="mb-4">Book your water sports adventure today!</p>
+          <div class="flex gap-4 justify-center">
+            <a href="/bookings/water-activities" class="inline-block bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold hover:bg-purple-50 transition shadow-lg">
+              🎢 Book Water Activity Now
+            </a>
+            <a href="/contact" class="inline-block bg-pink-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-pink-800 transition">
+              💬 Contact Us
+            </a>
+          </div>
+          <p class="text-sm text-purple-200 mt-3">Reserve your thrilling water adventure or inquire for more details</p>
+        </div>
+      </div>
+    </div>
+  </div>
+{{> footer}}

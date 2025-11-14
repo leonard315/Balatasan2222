@@ -1,0 +1,68 @@
+{{> head}}
+<body class="bg-gradient-to-br from-blue-50 to-cyan-50 min-h-screen">
+  {{> navbar}}
+
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <a href="/dashboard" class="inline-flex items-center text-blue-600 hover:text-blue-800 mb-4 transition">
+      <span class="mr-2">←</span> Back to Dashboard
+    </a>
+
+    <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">🏖️ Resort Amenities</h2>
+      <p class="text-gray-600 mb-8">Discover all the amazing facilities and services we offer to make your stay unforgettable.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Floating Cottage -->
+        <a href="/amenities/floating-cottage" class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-6 hover:shadow-xl transition duration-200">
+          <div class="flex items-start">
+            <span class="text-5xl mr-4">🛖</span>
+            <div class="flex-1">
+              <h3 class="text-2xl font-bold text-gray-800 mb-2">Floating Cottage</h3>
+              <p class="text-gray-600 mb-3">Unique overwater cottages with stunning ocean views, perfect for relaxation and privacy.</p>
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">Ocean View</span>
+                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">Private</span>
+                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">Romantic</span>
+              </div>
+              <p class="text-blue-600 font-semibold">Learn more →</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- Tour Packages -->
+        <a href="/amenities/beach-access" class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl p-6 hover:shadow-xl transition duration-200">
+          <div class="flex items-start">
+            <span class="text-5xl mr-4">🏝️</span>
+            <div class="flex-1">
+              <h3 class="text-2xl font-bold text-gray-800 mb-2">Tour Packages</h3>
+              <p class="text-gray-600 mb-3">Island hopping adventures to explore the beautiful islands around Balatasan.</p>
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-xs">Island Hopping</span>
+                <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-xs">Snorkeling</span>
+                <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-xs">Lunch Included</span>
+              </div>
+              <p class="text-orange-600 font-semibold">Learn more →</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- Water Activities -->
+        <a href="/amenities/water-sports" class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 hover:shadow-xl transition duration-200">
+          <div class="flex items-start">
+            <span class="text-5xl mr-4">🎣</span>
+            <div class="flex-1">
+              <h3 class="text-2xl font-bold text-gray-800 mb-2">Water Activities</h3>
+              <p class="text-gray-600 mb-3">Exciting water activities including snorkeling, kayaking, and island hopping tours.</p>
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs">Snorkeling</span>
+                <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs">Kayaking</span>
+                <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs">Island Tours</span>
+              </div>
+              <p class="text-purple-600 font-semibold">Learn more →</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+{{> footer}}

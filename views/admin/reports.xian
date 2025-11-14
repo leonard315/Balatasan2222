@@ -1,0 +1,300 @@
+{{> head}}
+<body class="bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen">
+  {{> admin-navbar}}
+
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <a href="/admin/dashboard" class="inline-flex items-center text-purple-600 hover:text-purple-800 mb-4 transition">
+      <span class="mr-2">←</span> Back to Admin Dashboard
+    </a>
+
+    <!-- Page Header -->
+    <div class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl shadow-lg p-8 mb-8 text-white">
+      <h2 class="text-3xl font-bold mb-2">📊 Reports & Analytics</h2>
+      <p class="text-purple-100">Comprehensive insights into your resort operations</p>
+    </div>
+
+    <!-- Export Section -->
+    <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+      <h3 class="text-xl font-bold text-gray-800 mb-4">📥 Export Data</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="border border-gray-200 rounded-lg p-4">
+          <h4 class="font-semibold text-gray-800 mb-2">Export Bookings</h4>
+          <p class="text-sm text-gray-600 mb-4">Download booking data as CSV file</p>
+          <form action="/admin/export/bookings" method="GET" class="space-y-3">
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs text-gray-600 mb-1">Start Date</label>
+                <input type="date" name="startDate" class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
+              </div>
+              <div>
+                <label class="block text-xs text-gray-600 mb-1">End Date</label>
+                <input type="date" name="endDate" class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-600 mb-1">Status</label>
+              <select name="status" class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
+                <option value="all">All Statuses</option>
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">
+              📥 Download Bookings CSV
+            </button>
+          </form>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-4">
+          <h4 class="font-semibold text-gray-800 mb-2">Export Users</h4>
+          <p class="text-sm text-gray-600 mb-4">Download user data as CSV file</p>
+          <form action="/admin/export/users" method="GET">
+            <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">
+              📥 Download Users CSV
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div class="bg-white rounded-xl shadow-md p-6">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-3xl">📅</span>
+          <span class="text-xs text-gray-500">This Month</span>
+        </div>
+        <p class="text-2xl font-bold text-blue-600" id="monthlyBookings">0</p>
+        <p class="text-sm text-gray-600">Bookings</p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-md p-6">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-3xl">💰</span>
+          <span class="text-xs text-gray-500">This Month</span>
+        </div>
+        <p class="text-2xl font-bold text-green-600" id="monthlyRevenue">₱0</p>
+        <p class="text-sm text-gray-600">Revenue</p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-md p-6">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-3xl">⭐</span>
+          <span class="text-xs text-gray-500">Average</span>
+        </div>
+        <p class="text-2xl font-bold text-yellow-600" id="avgRating">0.0</p>
+        <p class="text-sm text-gray-600">Rating</p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-md p-6">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-3xl">👥</span>
+          <span class="text-xs text-gray-500">Total</span>
+        </div>
+        <p class="text-2xl font-bold text-purple-600" id="totalCustomers">0</p>
+        <p class="text-sm text-gray-600">Customers</p>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div class="bg-white rounded-xl shadow-md p-6">
+        <h3 class="text-lg font-bold text-gray-800 mb-4">Revenue by Payment Method</h3>
+        <div id="paymentChart" class="space-y-3">
+          <div class="text-center text-gray-500 py-8">Loading...</div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-md p-6">
+        <h3 class="text-lg font-bold text-gray-800 mb-4">Booking Status Distribution</h3>
+        <div id="statusChart" class="space-y-3">
+          <div class="text-center text-gray-500 py-8">Loading...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Popular Activities -->
+    <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+      <h3 class="text-lg font-bold text-gray-800 mb-4">🏆 Most Popular Activities</h3>
+      <div id="popularActivities">
+        <div class="text-center text-gray-500 py-8">Loading...</div>
+      </div>
+    </div>
+
+    <!-- Top Customers -->
+    <div class="bg-white rounded-xl shadow-md p-6">
+      <h3 class="text-lg font-bold text-gray-800 mb-4">👑 Top Customers</h3>
+      <div id="topCustomers">
+        <div class="text-center text-gray-500 py-8">Loading...</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Load analytics data
+    async function loadAnalytics() {
+      try {
+        // Load booking analytics
+        const bookingRes = await fetch('/admin/api/analytics/bookings');
+        const bookingData = await bookingRes.json();
+        
+        if (bookingData.success) {
+          renderPaymentChart(bookingData.data.revenueByPayment);
+          renderStatusChart(bookingData.data.revenueByStatus);
+          renderPopularActivities(bookingData.data.popularActivities);
+        }
+
+        // Load customer insights
+        const customerRes = await fetch('/admin/api/analytics/customers');
+        const customerData = await customerRes.json();
+        
+        if (customerData.success) {
+          document.getElementById('totalCustomers').textContent = customerData.data.totalCustomers;
+          renderTopCustomers(customerData.data.topCustomers);
+        }
+
+        // Load review analytics
+        const reviewRes = await fetch('/admin/api/analytics/reviews');
+        const reviewData = await reviewRes.json();
+        
+        if (reviewData.success) {
+          document.getElementById('avgRating').textContent = reviewData.data.averageRating;
+        }
+      } catch (error) {
+        console.error('Error loading analytics:', error);
+      }
+    }
+
+    function renderPaymentChart(data) {
+      const container = document.getElementById('paymentChart');
+      if (!data || data.length === 0) {
+        container.innerHTML = '<p class="text-center text-gray-500 py-4">No data available</p>';
+        return;
+      }
+
+      const total = data.reduce((sum, item) => sum + parseFloat(item.revenue || 0), 0);
+      
+      container.innerHTML = data.map(item => {
+        const percentage = total > 0 ? (item.revenue / total * 100).toFixed(1) : 0;
+        return `
+          <div class="mb-3">
+            <div class="flex justify-between text-sm mb-1">
+              <span class="font-semibold capitalize">${item.paymentMethod}</span>
+              <span class="text-gray-600">₱${parseFloat(item.revenue || 0).toFixed(2)} (${percentage}%)</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-3">
+              <div class="bg-blue-600 h-3 rounded-full" style="width: ${percentage}%"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderStatusChart(data) {
+      const container = document.getElementById('statusChart');
+      if (!data || data.length === 0) {
+        container.innerHTML = '<p class="text-center text-gray-500 py-4">No data available</p>';
+        return;
+      }
+
+      const colors = {
+        pending: 'bg-yellow-600',
+        confirmed: 'bg-green-600',
+        completed: 'bg-blue-600',
+        cancelled: 'bg-red-600'
+      };
+
+      const total = data.reduce((sum, item) => sum + parseInt(item.count || 0), 0);
+      
+      container.innerHTML = data.map(item => {
+        const percentage = total > 0 ? (item.count / total * 100).toFixed(1) : 0;
+        return `
+          <div class="mb-3">
+            <div class="flex justify-between text-sm mb-1">
+              <span class="font-semibold capitalize">${item.status}</span>
+              <span class="text-gray-600">${item.count} bookings (${percentage}%)</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-3">
+              <div class="${colors[item.status] || 'bg-gray-600'} h-3 rounded-full" style="width: ${percentage}%"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderPopularActivities(data) {
+      const container = document.getElementById('popularActivities');
+      if (!data || data.length === 0) {
+        container.innerHTML = '<p class="text-center text-gray-500 py-4">No data available</p>';
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600">Rank</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600">Activity</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600">Bookings</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600">Revenue</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              ${data.map((item, index) => `
+                <tr class="hover:bg-gray-50">
+                  <td class="px-4 py-3 text-sm font-bold text-gray-800">#${index + 1}</td>
+                  <td class="px-4 py-3 text-sm text-gray-700">${item.roomType}</td>
+                  <td class="px-4 py-3 text-sm text-blue-600 font-semibold">${item.bookings}</td>
+                  <td class="px-4 py-3 text-sm text-green-600 font-bold">₱${parseFloat(item.revenue || 0).toFixed(2)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderTopCustomers(data) {
+      const container = document.getElementById('topCustomers');
+      if (!data || data.length === 0) {
+        container.innerHTML = '<p class="text-center text-gray-500 py-4">No data available</p>';
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600">Rank</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600">Customer</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600">Contact</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600">Total Bookings</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600">Total Spent</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              ${data.map((item, index) => `
+                <tr class="hover:bg-gray-50">
+                  <td class="px-4 py-3 text-sm font-bold text-gray-800">#${index + 1}</td>
+                  <td class="px-4 py-3 text-sm">
+                    <p class="font-semibold text-gray-800">${item.User.name}</p>
+                  </td>
+                  <td class="px-4 py-3 text-sm text-gray-600">${item.User.email}</td>
+                  <td class="px-4 py-3 text-sm text-blue-600 font-semibold">${item.totalBookings}</td>
+                  <td class="px-4 py-3 text-sm text-green-600 font-bold">₱${parseFloat(item.totalSpent || 0).toFixed(2)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    // Load data on page load
+    document.addEventListener('DOMContentLoaded', loadAnalytics);
+  </script>
+{{> footer}}

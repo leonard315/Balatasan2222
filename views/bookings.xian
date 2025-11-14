@@ -1,0 +1,334 @@
+{{> head}}
+<body class="bg-gradient-to-br from-blue-50 to-cyan-50 min-h-screen">
+  {{> navbar}}
+
+  <div class="max-w-6xl mx-auto px-4 py-8">
+    <a href="/dashboard" class="inline-flex items-center text-blue-600 hover:text-blue-800 mb-4 transition">
+      <span class="mr-2">←</span> Back to Dashboard
+    </a>
+    <div class="bg-white rounded-xl shadow-lg p-8">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-bold text-gray-800">📋 My Bookings</h2>
+        <a href="/bookings/select" 
+          class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition">
+          + New Booking
+        </a>
+      </div>
+
+      {{#if success_msg}}
+        <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded-lg mb-6 shadow-md animate-pulse">
+          <div class="flex items-center">
+            <span class="text-4xl mr-4">✅</span>
+            <div>
+              <h3 class="text-lg font-bold text-green-800 mb-1">Booking Successful!</h3>
+              <p class="text-green-700">{{success_msg}}</p>
+            </div>
+          </div>
+        </div>
+      {{/if}}
+
+      {{#if error_msg}}
+        <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-lg mb-6 shadow-md">
+          <div class="flex items-center">
+            <span class="text-4xl mr-4">❌</span>
+            <div>
+              <h3 class="text-lg font-bold text-red-800 mb-1">Booking Failed</h3>
+              <p class="text-red-700">{{error_msg}}</p>
+            </div>
+          </div>
+        </div>
+      {{/if}}
+
+      {{#if bookings.length}}
+        <div class="space-y-4">
+          {{#each bookings}}
+            <div class="border border-gray-200 rounded-lg p-6 hover:shadow-md transition">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <h3 class="text-lg font-bold text-gray-800">Booking #{{this.id}}</h3>
+                  <p class="text-sm text-gray-600">{{this.roomType}} Room</p>
+                </div>
+                <span class="px-3 py-1 rounded-full text-sm font-semibold
+                  {{#if (eq this.status 'pending')}}bg-yellow-100 text-yellow-800{{/if}}
+                  {{#if (eq this.status 'confirmed')}}bg-green-100 text-green-800{{/if}}
+                  {{#if (eq this.status 'cancelled')}}bg-red-100 text-red-800{{/if}}
+                  {{#if (eq this.status 'completed')}}bg-blue-100 text-blue-800{{/if}}">
+                  {{this.status}}
+                </span>
+              </div>
+              <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm mb-4">
+                <div>
+                  <p class="text-gray-500">Check-in</p>
+                  <p class="font-semibold">{{this.checkIn}}</p>
+                </div>
+                <div>
+                  <p class="text-gray-500">Check-out</p>
+                  <p class="font-semibold">{{this.checkOut}}</p>
+                </div>
+                <div>
+                  <p class="text-gray-500">Guests</p>
+                  <p class="font-semibold">{{this.guests}} person(s)</p>
+                </div>
+                <div>
+                  <p class="text-gray-500">Payment Method</p>
+                  <p class="font-semibold uppercase">
+                    {{#if (eq this.paymentMethod 'gcash')}}
+                      <span class="text-blue-600">💳 GCash</span>
+                    {{else if (eq this.paymentMethod 'paymaya')}}
+                      <span class="text-green-600">💳 PayMaya</span>
+                    {{else if (eq this.paymentMethod 'credit-card')}}
+                      <span class="text-purple-600">💳 Credit Card</span>
+                    {{else if (eq this.paymentMethod 'cash')}}
+                      <span class="text-orange-600">💵 Cash</span>
+                    {{else}}
+                      <span class="text-gray-600">{{this.paymentMethod}}</span>
+                    {{/if}}
+                  </p>
+                </div>
+                <div>
+                  <p class="text-gray-500">Total Amount</p>
+                  <p class="font-semibold text-blue-600">₱{{this.totalAmount}}</p>
+                </div>
+              </div>
+
+              <!-- Upload Payment Proof Section (Not for Cash payments) -->
+              {{#if (eq this.status 'pending')}}
+                {{#unless this.paymentProof}}
+                  {{#unless (eq this.paymentMethod 'cash')}}
+                    <div class="mt-4 pt-4 border-t border-gray-200 bg-gradient-to-br from-yellow-50 to-orange-50 p-6 rounded-lg shadow-sm">
+                      <div class="flex items-center gap-2 mb-4">
+                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>
+                        <h4 class="text-lg font-bold text-gray-800">Upload Payment Proof</h4>
+                      </div>
+                      <p class="text-sm text-gray-600 mb-4">
+                        Upload a clear screenshot of your {{this.paymentMethod}} payment transaction. 
+                        Make sure the reference number and amount are visible.
+                      </p>
+                      
+                      <form id="payment-upload-form-{{this.id}}" action="/bookings/{{this.id}}/payment" method="POST" enctype="multipart/form-data" class="space-y-4">
+                        <!-- File input (will be enhanced by JavaScript) -->
+                        <div>
+                          <label class="block text-sm font-semibold text-gray-700 mb-2">Payment Screenshot *</label>
+                          <input type="file" name="paymentProof" accept="image/*" required 
+                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                        </div>
+                        
+                        <!-- Reference Number -->
+                        <div>
+                          <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Reference Number 
+                            <span class="text-gray-500 font-normal">(Optional)</span>
+                          </label>
+                          <input type="text" name="referenceNumber" placeholder="e.g., 1234567890" 
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                          <p class="text-xs text-gray-500 mt-1">Enter the transaction reference number if available</p>
+                        </div>
+
+                        <!-- Payment Instructions -->
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                          <p class="text-sm font-semibold text-blue-900 mb-2">💡 Payment Instructions:</p>
+                          <ul class="text-xs text-blue-800 space-y-1 list-disc list-inside">
+                            <li>Send payment to our {{this.paymentMethod}} account</li>
+                            <li>Take a screenshot showing the transaction details</li>
+                            <li>Upload the screenshot using the form above</li>
+                            <li>Wait for admin verification (usually within 24 hours)</li>
+                          </ul>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                          <button type="submit" 
+                            class="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-6 py-3 rounded-lg font-semibold transition shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Upload Payment Proof
+                          </button>
+                        </div>
+                      </form>
+
+                      <!-- Cancel Button (separate form) -->
+                      <form action="/bookings/{{this.id}}/cancel" method="POST" data-action="cancel-booking" class="mt-3">
+                        <button type="submit" 
+                          class="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg text-sm font-semibold transition shadow-sm hover:shadow-md flex items-center justify-center gap-2">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                          </svg>
+                          Cancel This Booking
+                        </button>
+                      </form>
+                    </div>
+                  {{/unless}}
+                  {{#if (eq this.paymentMethod 'cash')}}
+                    <div class="mt-4 pt-4 border-t border-gray-200 bg-orange-50 p-4 rounded-lg">
+                      <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                          <p class="text-sm font-semibold text-gray-800 mb-2">💵 Cash on Arrival</p>
+                          <p class="text-xs text-gray-600">You selected to pay in cash when you arrive at the resort. No payment proof needed.</p>
+                          <p class="text-xs text-gray-600 mt-2">Please bring the full amount of <strong class="text-orange-700">₱{{this.totalAmount}}</strong> during check-in.</p>
+                        </div>
+                        <form action="/bookings/{{this.id}}/cancel" method="POST" data-action="cancel-booking">
+                          <button type="submit" 
+                            class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-xs font-semibold transition whitespace-nowrap">
+                            ✕ Cancel
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  {{/if}}
+                {{/unless}}
+              {{/if}}
+
+              <!-- Pending Verification Status -->
+              {{#if (eq this.status 'pending_verification')}}
+                <div class="mt-4 pt-4 border-t border-gray-200 bg-blue-50 p-4 rounded-lg">
+                  <p class="text-sm font-semibold text-gray-800 mb-2">⏳ Payment Under Verification</p>
+                  <p class="text-xs text-gray-600">Your payment proof has been submitted and is being reviewed by our team. You'll be notified once verified.</p>
+                </div>
+              {{/if}}
+
+              <!-- Display Uploaded Payment Proof -->
+              {{#if this.paymentProof}}
+                <div class="mt-4 pt-4 border-t border-gray-200 bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-lg shadow-sm">
+                  <div class="flex items-center gap-2 mb-4">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <h4 class="text-lg font-bold text-gray-800">Payment Proof Submitted</h4>
+                  </div>
+                  
+                  <div class="flex flex-col md:flex-row gap-4">
+                    <!-- Image Preview -->
+                    <div class="flex-shrink-0">
+                      <div class="relative group">
+                        <img src="{{this.paymentProof}}" alt="Payment Proof" 
+                          class="w-40 h-40 object-cover rounded-lg border-2 border-green-400 cursor-pointer hover:border-green-600 transition shadow-lg"
+                          onclick="openImageModal('{{this.paymentProof}}')"
+                          title="Click to view full size">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 rounded-lg transition flex items-center justify-center">
+                          <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Details -->
+                    <div class="flex-1">
+                      <div class="space-y-3">
+                        <div class="flex items-start gap-2">
+                          <svg class="w-5 h-5 text-green-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                          <div>
+                            <p class="text-sm font-semibold text-gray-800">Upload Status</p>
+                            <p class="text-xs text-green-700">Successfully uploaded</p>
+                          </div>
+                        </div>
+                        
+                        {{#if this.referenceNumber}}
+                          <div class="flex items-start gap-2">
+                            <svg class="w-5 h-5 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path>
+                            </svg>
+                            <div>
+                              <p class="text-sm font-semibold text-gray-800">Reference Number</p>
+                              <p class="text-xs text-gray-700 font-mono bg-white px-2 py-1 rounded border border-gray-200 inline-block">{{this.referenceNumber}}</p>
+                            </div>
+                          </div>
+                        {{/if}}
+                        
+                        <div class="flex items-start gap-2">
+                          <svg class="w-5 h-5 {{#if (eq this.status 'pending_verification')}}text-orange-600{{else}}text-green-600{{/if}} mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                          </svg>
+                          <div>
+                            <p class="text-sm font-semibold text-gray-800">Verification Status</p>
+                            {{#if (eq this.status 'pending_verification')}}
+                              <p class="text-xs text-orange-700 font-semibold">⏳ Under Review - Usually verified within 24 hours</p>
+                            {{else if (eq this.status 'confirmed')}}
+                              <p class="text-xs text-green-700 font-semibold">✓ Verified and Confirmed</p>
+                            {{else}}
+                              <p class="text-xs text-gray-600">Status: {{this.status}}</p>
+                            {{/if}}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-3">
+                        <p class="text-xs text-blue-800">
+                          <strong>💡 Tip:</strong> Click on the image to view it in full size. 
+                          Our team will verify your payment and update your booking status shortly.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {{/if}}
+            </div>
+          {{/each}}
+        </div>
+      {{else}}
+        <div class="text-center py-12">
+          <span class="text-6xl mb-4 block">📅</span>
+          <h3 class="text-xl font-semibold text-gray-700 mb-2">No Bookings Yet</h3>
+          <p class="text-gray-600 mb-6">Start planning your beach vacation today!</p>
+          <a href="/bookings/select" 
+            class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition">
+            Make Your First Booking
+          </a>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+  <!-- Image Modal -->
+  <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center p-4" onclick="closeImageModal()">
+    <div class="relative max-w-4xl max-h-full" onclick="event.stopPropagation()">
+      <button onclick="closeImageModal()" class="absolute -top-4 -right-4 bg-white hover:bg-gray-100 text-gray-800 rounded-full w-10 h-10 flex items-center justify-center shadow-lg transition z-10">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+      <img id="modalImage" src="" alt="Payment Proof" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl">
+      <div class="mt-4 text-center">
+        <a id="downloadLink" href="" download class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+          </svg>
+          Download Image
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openImageModal(imageSrc) {
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      const downloadLink = document.getElementById('downloadLink');
+      
+      modalImage.src = imageSrc;
+      downloadLink.href = imageSrc;
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeImageModal() {
+      const modal = document.getElementById('imageModal');
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeImageModal();
+      }
+    });
+  </script>
+
+  <script src="/js/booking-enhancements.js"></script>
+  <script src="/js/payment-upload.js"></script>
+{{> footer}}

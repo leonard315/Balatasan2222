@@ -1,0 +1,204 @@
+{{> head}}
+<body class="bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen">
+  {{> admin-navbar}}
+
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <a href="/admin/dashboard" class="inline-flex items-center text-purple-600 hover:text-purple-800 mb-4 transition">
+      <span class="mr-2">←</span> Back to Admin Dashboard
+    </a>
+
+    <div class="bg-white rounded-xl shadow-lg p-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6">📅 Bookings Management</h2>
+
+      {{#if bookings.length}}
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-purple-100">
+              <tr>
+                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">ID</th>
+                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Customer</th>
+                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Tour/Activity</th>
+                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Date</th>
+                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Guests</th>
+                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Payment</th>
+                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Payment Details</th>
+                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Amount</th>
+                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Status</th>
+                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              {{#each bookings}}
+                <tr class="hover:bg-gray-50">
+                  <td class="px-4 py-3 text-sm font-bold text-purple-600">#{{this.id}}</td>
+                  <td class="px-4 py-3 text-sm">
+                    <p class="font-semibold">{{this.User.name}}</p>
+                    <p class="text-xs text-gray-500">{{this.User.email}}</p>
+                  </td>
+                  <td class="px-4 py-3 text-sm font-semibold">{{this.roomType}}</td>
+                  <td class="px-4 py-3 text-sm">{{this.checkIn}}</td>
+                  <td class="px-4 py-3 text-sm text-center">{{this.guests}}</td>
+                  <td class="px-4 py-3 text-sm">
+                    <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs uppercase">{{this.paymentMethod}}</span>
+                  </td>
+                  <td class="px-4 py-3">
+                    {{#if this.paymentProof}}
+                      <div class="flex items-center gap-2">
+                        <img src="{{this.paymentProof}}" 
+                             alt="Payment" 
+                             class="w-12 h-12 object-cover rounded border-2 border-blue-300 cursor-pointer hover:scale-110 transition"
+                             onclick="showProof('{{this.id}}')"
+                             title="Click to view full size" />
+                        <div>
+                          <button onclick="showProof('{{this.id}}')" class="text-xs text-blue-600 hover:text-blue-800 font-semibold">
+                            View Full Size
+                          </button>
+                          {{#if this.referenceNumber}}
+                            <p class="text-xs font-mono text-gray-600">{{this.referenceNumber}}</p>
+                          {{/if}}
+                        </div>
+                      </div>
+                    {{else}}
+                      <div class="text-center">
+                        <p class="text-xs text-gray-400">❌ No proof</p>
+                        <p class="text-xs text-gray-300">uploaded</p>
+                      </div>
+                    {{/if}}
+                  </td>
+                  <td class="px-4 py-3 text-sm font-bold text-green-600">₱{{this.totalAmount}}</td>
+                  <td class="px-4 py-3 text-sm">
+                    {{#if (eq this.status 'pending')}}
+                      <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs">Pending</span>
+                    {{/if}}
+                    {{#if (eq this.status 'pending_verification')}}
+                      <span class="px-2 py-1 bg-orange-100 text-orange-800 rounded text-xs">Verifying Payment</span>
+                    {{/if}}
+                    {{#if (eq this.status 'confirmed')}}
+                      <span class="px-2 py-1 bg-green-100 text-green-800 rounded text-xs">Confirmed</span>
+                    {{/if}}
+                    {{#if (eq this.status 'cancelled')}}
+                      <span class="px-2 py-1 bg-red-100 text-red-800 rounded text-xs">Cancelled</span>
+                    {{/if}}
+                  </td>
+                  <td class="px-4 py-3 text-sm">
+                    {{#if (eq this.status 'pending')}}
+                      <div class="flex gap-2">
+                        <form method="POST" action="/admin/bookings/confirm" class="inline">
+                          <input type="hidden" name="bookingId" value="{{this.id}}" />
+                          <button type="submit" class="px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded text-xs font-semibold transition">
+                            ✓ Confirm
+                          </button>
+                        </form>
+                        <form method="POST" action="/admin/bookings/cancel" class="inline">
+                          <input type="hidden" name="bookingId" value="{{this.id}}" />
+                          <button type="submit" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded text-xs font-semibold transition">
+                            ✗ Cancel
+                          </button>
+                        </form>
+                      </div>
+                    {{else}}
+                      <span class="text-gray-400 text-xs">No actions</span>
+                    {{/if}}
+                  </td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      {{else}}
+        <div class="text-center py-12">
+          <span class="text-6xl mb-4 block">📋</span>
+          <h3 class="text-xl font-semibold text-gray-700 mb-2">No Bookings Yet</h3>
+          <p class="text-gray-600">Booking records will appear here once guests make reservations.</p>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+
+  <!-- Proof of Payment Modal -->
+  <div id="proofModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-auto">
+      <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+        <h3 class="text-xl font-bold text-gray-800">💳 Proof of Payment</h3>
+        <button onclick="closeProof()" class="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+      </div>
+      <div class="p-6">
+        <div id="proofContent" class="text-center">
+          <!-- Proof details will be inserted here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const bookingsData = {
+      {{#each bookings}}
+        '{{this.id}}': {
+          referenceNumber: '{{this.referenceNumber}}',
+          paymentProof: '{{this.paymentProof}}',
+          paymentMethod: '{{this.paymentMethod}}',
+          amount: '{{this.totalAmount}}',
+          customerName: '{{this.User.name}}'
+        }{{#unless @last}},{{/unless}}
+      {{/each}}
+    };
+
+    function showProof(bookingId) {
+      const booking = bookingsData[bookingId];
+      const modal = document.getElementById('proofModal');
+      const content = document.getElementById('proofContent');
+      
+      if (booking) {
+        content.innerHTML = `
+          <div class="mb-6 bg-gray-50 p-4 rounded-lg">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <p class="text-xs text-gray-500 uppercase">Customer</p>
+                <p class="text-sm font-semibold text-gray-800">${booking.customerName}</p>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500 uppercase">Payment Method</p>
+                <p class="text-sm font-semibold text-gray-800 uppercase">${booking.paymentMethod}</p>
+              </div>
+              ${booking.referenceNumber ? `
+              <div>
+                <p class="text-xs text-gray-500 uppercase">Reference Number</p>
+                <p class="text-sm font-mono font-semibold text-blue-600">${booking.referenceNumber}</p>
+              </div>
+              ` : ''}
+              <div>
+                <p class="text-xs text-gray-500 uppercase">Amount</p>
+                <p class="text-lg font-bold text-green-600">₱${booking.amount}</p>
+              </div>
+            </div>
+          </div>
+          ${booking.paymentProof ? 
+            `<div class="bg-gray-100 p-4 rounded-lg">
+              <p class="text-sm font-semibold text-gray-700 mb-3 text-center">📸 Payment Screenshot</p>
+              <img src="${booking.paymentProof}" 
+                   alt="Payment Proof" 
+                   class="max-w-full h-auto rounded-lg shadow-xl mx-auto border-4 border-white cursor-pointer hover:scale-105 transition-transform"
+                   onclick="window.open('${booking.paymentProof}', '_blank')"
+                   style="max-height: 500px; object-fit: contain;" />
+              <p class="text-xs text-gray-500 mt-3 text-center">💡 Click image to view full size in new tab</p>
+            </div>` : 
+            '<div class="text-center py-8"><p class="text-gray-500 text-lg">❌ No payment proof uploaded yet</p><p class="text-gray-400 text-sm mt-2">Customer has not uploaded payment screenshot</p></div>'
+          }
+        `;
+        modal.classList.remove('hidden');
+      }
+    }
+
+    function closeProof() {
+      document.getElementById('proofModal').classList.add('hidden');
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('proofModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeProof();
+      }
+    });
+  </script>
+
+{{> footer}}
