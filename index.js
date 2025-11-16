@@ -46,7 +46,7 @@ app.use(express.static(path.join(process.cwd(), "public")));
 app.use(cookieParser());
 
 app.use(session({
-  secret: "xianfire-secret-key",
+  secret: process.env.SESSION_SECRET || "xianfire-secret-key",
   resave: false,
   saveUninitialized: false
 }));
@@ -107,29 +107,22 @@ hbs.registerHelper('formatDateTime', function(date) {
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "xian");
-const partialsDir = path.join(__dirname, "views/partials");
-fs.readdir(partialsDir, (err, files) => {
-  if (err) {
-    console.error("❌ Could not read partials directory:", err);
-    return;
-  }
 
-   files
+// Register partials synchronously for Vercel compatibility
+const partialsDir = path.join(__dirname, "views/partials");
+try {
+  const files = fs.readdirSync(partialsDir);
+  files
     .filter(file => file.endsWith('.xian'))
     .forEach(file => {
       const partialName = file.replace('.xian', ''); 
       const fullPath = path.join(partialsDir, file);
-
-      fs.readFile(fullPath, 'utf8', (err, content) => {
-        if (err) {
-          console.error(`❌ Failed to read partial: ${file}`, err);
-          return;
-        }
-        hbs.registerPartial(partialName, content);
-        
-      });
+      const content = fs.readFileSync(fullPath, 'utf8');
+      hbs.registerPartial(partialName, content);
     });
-});
+} catch (err) {
+  console.error("❌ Could not read partials directory:", err);
+}
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
