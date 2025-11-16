@@ -1,22 +1,152 @@
-<nav class="bg-gradient-to-r from-purple-600 to-pink-600 shadow-lg">
+<style>
+  .admin-nav-link {
+    position: relative;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  
+  .admin-nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(to right, #fbbf24, #f59e0b);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+  
+  .admin-nav-link:hover::after {
+    width: 85%;
+  }
+  
+  .admin-nav-link:hover {
+    transform: translateY(-1px);
+  }
+  
+  .admin-logo-text {
+    letter-spacing: 0.1em;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+</style>
+
+<nav class="bg-gradient-to-r from-purple-700 via-purple-600 to-pink-600 shadow-2xl sticky top-0 z-50 backdrop-blur-sm">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
       <div class="flex items-center">
-        <a href="/admin/dashboard" class="text-xl font-bold text-white">👑 Admin Panel - Balatasan Resort</a>
+        <a href="/admin/dashboard" class="flex items-center space-x-3 text-white hover:text-purple-100 transition-all duration-300 group">
+          <span class="text-2xl transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">👑</span>
+          <div class="flex flex-col">
+            <span class="text-base sm:text-lg font-extrabold leading-none admin-logo-text tracking-widest">ADMIN PANEL</span>
+            <span class="text-xs text-purple-200 uppercase tracking-wide font-semibold leading-none mt-0.5">Balatasan Resort</span>
+          </div>
+        </a>
       </div>
-      <div class="flex items-center space-x-4">
-        <a href="/admin/dashboard" class="text-white hover:text-purple-200 transition">Dashboard</a>
-        <a href="/admin/users" class="text-white hover:text-purple-200 transition">Users</a>
-        <a href="/admin/bookings" class="text-white hover:text-purple-200 transition">Bookings</a>
-        <a href="/admin/payments" class="text-white hover:text-purple-200 transition font-semibold">💳 Payments</a>
-        <a href="/admin/feedback" class="text-white hover:text-purple-200 transition font-semibold">⭐ Feedback</a>
-        <a href="/admin/reports" class="text-white hover:text-purple-200 transition">Reports</a>
-        <span class="text-white">👤 {{userName}}</span>
-        <span class="px-3 py-1 bg-yellow-400 text-purple-900 rounded-full text-sm font-bold">{{userRole}}</span>
-        <a href="/logout" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition">
+      
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex items-center space-x-1">
+        <!-- Nav Links -->
+        <a href="/admin/dashboard" class="admin-nav-link group px-4 py-2.5 text-white hover:bg-white/20 rounded-xl transition-all duration-300 font-bold text-xs tracking-widest flex items-center gap-2">
+          <span class="text-base group-hover:scale-125 transition-transform duration-300">📊</span>
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin/users" class="admin-nav-link group px-4 py-2.5 text-white hover:bg-white/20 rounded-xl transition-all duration-300 font-bold text-xs tracking-widest flex items-center gap-2">
+          <span class="text-base group-hover:scale-125 transition-transform duration-300">👥</span>
+          <span>Users</span>
+        </a>
+        <a href="/admin/bookings" class="admin-nav-link group px-4 py-2.5 text-white hover:bg-white/20 rounded-xl transition-all duration-300 font-bold text-xs tracking-widest flex items-center gap-2">
+          <span class="text-base group-hover:scale-125 transition-transform duration-300">📅</span>
+          <span>Bookings</span>
+        </a>
+        <a href="/admin/payments" class="admin-nav-link group px-4 py-2.5 text-white hover:bg-white/20 rounded-xl transition-all duration-300 font-extrabold text-xs tracking-widest flex items-center gap-2 bg-white/10">
+          <span class="text-base group-hover:scale-125 transition-transform duration-300">💳</span>
+          <span>Payments</span>
+        </a>
+        <a href="/admin/feedback" class="admin-nav-link group px-4 py-2.5 text-white hover:bg-white/20 rounded-xl transition-all duration-300 font-extrabold text-xs tracking-widest flex items-center gap-2 bg-white/10">
+          <span class="text-base group-hover:scale-125 transition-transform duration-300">⭐</span>
+          <span>Feedback</span>
+        </a>
+        <a href="/admin/reports" class="admin-nav-link group px-4 py-2.5 text-white hover:bg-white/20 rounded-xl transition-all duration-300 font-bold text-xs tracking-widest flex items-center gap-2">
+          <span class="text-base group-hover:scale-125 transition-transform duration-300">📈</span>
+          <span>Reports</span>
+        </a>
+        
+        <!-- User Info -->
+        <div class="flex items-center ml-4 pl-4 border-l-2 border-white/40 space-x-3">
+          <div class="flex items-center space-x-2 bg-white/10 px-3 py-1.5 rounded-full">
+            <div class="w-9 h-9 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center ring-2 ring-white/50 shadow-lg">
+              <span class="text-purple-900 text-sm font-bold">👤</span>
+            </div>
+            <span class="text-white font-bold hidden xl:inline tracking-wide">{{userName}}</span>
+          </div>
+          <span class="px-4 py-1.5 bg-gradient-to-r from-yellow-400 to-yellow-500 text-purple-900 rounded-full text-xs font-extrabold uppercase tracking-widest shadow-lg animate-pulse">
+            {{userRole}}
+          </span>
+          <a href="/logout" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-5 py-2 rounded-xl transition-all duration-300 font-bold shadow-lg hover:shadow-xl transform hover:scale-105 uppercase tracking-widest text-xs">
+            Logout
+          </a>
+        </div>
+      </div>
+      
+      <!-- Mobile Menu Button -->
+      <div class="lg:hidden flex items-center">
+        <button id="admin-mobile-menu-btn" class="text-white hover:bg-white/20 p-2 rounded-lg transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile Menu -->
+  <div id="admin-mobile-menu" class="hidden lg:hidden bg-gradient-to-b from-purple-800 to-purple-900 border-t-2 border-white/20 shadow-2xl">
+    <div class="px-4 py-4 space-y-2">
+      <a href="/admin/dashboard" class="block px-5 py-3 text-white hover:bg-white/20 rounded-xl transition-all duration-300 font-bold tracking-widest uppercase text-xs">
+        📊 Dashboard
+      </a>
+      <a href="/admin/users" class="block px-5 py-3 text-white hover:bg-white/20 rounded-xl transition-all duration-300 font-bold tracking-widest uppercase text-xs">
+        👥 Users
+      </a>
+      <a href="/admin/bookings" class="block px-5 py-3 text-white hover:bg-white/20 rounded-xl transition-all duration-300 font-bold tracking-widest uppercase text-xs">
+        📅 Bookings
+      </a>
+      <a href="/admin/payments" class="block px-5 py-3 text-white hover:bg-white/20 rounded-xl transition-all duration-300 font-extrabold tracking-widest uppercase text-xs bg-white/10">
+        💳 Payments
+      </a>
+      <a href="/admin/feedback" class="block px-5 py-3 text-white hover:bg-white/20 rounded-xl transition-all duration-300 font-extrabold tracking-widest uppercase text-xs bg-white/10">
+        ⭐ Feedback
+      </a>
+      <a href="/admin/reports" class="block px-5 py-3 text-white hover:bg-white/20 rounded-xl transition-all duration-300 font-bold tracking-widest uppercase text-xs">
+        📈 Reports
+      </a>
+      <div class="pt-4 border-t-2 border-white/20 mt-3">
+        <div class="flex items-center justify-between px-5 py-3 bg-white/10 rounded-xl">
+          <span class="text-white font-extrabold tracking-wide">{{userName}}</span>
+          <span class="px-3 py-1 bg-yellow-400 text-purple-900 rounded-full text-xs font-extrabold uppercase tracking-widest">{{userRole}}</span>
+        </div>
+        <a href="/logout" class="block mt-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-5 py-3 rounded-xl transition-all duration-300 text-center font-bold uppercase tracking-widest shadow-lg text-xs">
           Logout
         </a>
       </div>
     </div>
   </div>
 </nav>
+
+<script>
+  // Admin mobile menu toggle
+  document.getElementById('admin-mobile-menu-btn')?.addEventListener('click', function() {
+    const menu = document.getElementById('admin-mobile-menu');
+    menu.classList.toggle('hidden');
+  });
+  
+  // Active link highlighting
+  const currentPath = window.location.pathname;
+  document.querySelectorAll('.admin-nav-link').forEach(link => {
+    if (link.getAttribute('href') === currentPath) {
+      link.classList.add('bg-white/30', 'shadow-lg', 'ring-2', 'ring-yellow-400');
+    }
+  });
+</script>
