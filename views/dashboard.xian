@@ -1,9 +1,10 @@
 {{> head}}
-<body class="min-h-screen relative">
-  <!-- Background Image with Overlay -->
+<body class="min-h-screen relative bg-gray-50">
+  <!-- Premium Background with Animated Particles -->
   <div class="fixed inset-0 z-0">
-    <img src="https://i.ytimg.com/vi/GNAkv2CTl_8/maxresdefault.jpg" alt="Beach Background" class="w-full h-full object-cover">
-    <div class="absolute inset-0 bg-gradient-to-br from-blue-900/50 via-cyan-900/50 to-teal-900/50 backdrop-blur-[2px]"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900"></div>
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+    <div class="floating-particles"></div>
   </div>
   
   <!-- Content Wrapper -->
@@ -12,73 +13,193 @@
 
     <!-- Main Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Welcome Section with Animation -->
-    <div class="relative bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 rounded-2xl shadow-2xl p-8 mb-8 text-white overflow-hidden">
-      <!-- Animated Background Pattern -->
-      <div class="absolute inset-0 opacity-10">
-        <div class="wave-pattern"></div>
-      </div>
+    <!-- Premium Welcome Section -->
+    <div class="relative bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-3xl shadow-2xl p-8 mb-8 text-white overflow-hidden border border-white/20">
+      <!-- Premium Background Effects -->
+      <div class="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent"></div>
+      <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-white/20 to-transparent rounded-full -mr-48 -mt-48 blur-3xl"></div>
+      <div class="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-cyan-400/30 to-transparent rounded-full -ml-32 -mb-32 blur-2xl"></div>
       
-      <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6">
         <div class="text-center md:text-left">
-          <h2 class="text-4xl font-bold mb-2 animate-fade-in">Welcome back, {{userName}}! 👋</h2>
-          <p class="text-blue-100 text-lg">Ready to plan your next beach getaway?</p>
-          <div class="mt-4 flex flex-wrap gap-2 justify-center md:justify-start">
-            <span class="px-3 py-1 bg-white bg-opacity-20 rounded-full text-sm backdrop-blur-sm">🌊 Beach Paradise</span>
-            <span class="px-3 py-1 bg-white bg-opacity-20 rounded-full text-sm backdrop-blur-sm">🏝️ Island Tours</span>
-            <span class="px-3 py-1 bg-white bg-opacity-20 rounded-full text-sm backdrop-blur-sm">🎣 Water Sports</span>
+          <div class="flex items-center justify-center md:justify-start mb-4">
+            <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm mr-4 animate-pulse">
+              <span class="text-3xl">👋</span>
+            </div>
+            <div>
+              <h2 class="text-4xl font-bold mb-1 bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">
+                Welcome back, {{userName}}!
+              </h2>
+              <p class="text-indigo-100 text-lg">Your premium beach experience awaits</p>
+            </div>
+          </div>
+          
+          <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+            <div class="premium-badge">
+              <span class="text-lg">🌊</span>
+              <span>Premium Resort</span>
+            </div>
+            <div class="premium-badge">
+              <span class="text-lg">⭐</span>
+              <span>5-Star Service</span>
+            </div>
+            <div class="premium-badge">
+              <span class="text-lg">🏆</span>
+              <span>Award Winning</span>
+            </div>
           </div>
         </div>
-        {{#if (eq userRole 'admin')}}
-          <a href="/admin/dashboard" class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-xl font-semibold transition transform hover:scale-105 shadow-lg hover:shadow-xl">
-            👑 Admin Panel
-          </a>
-        {{/if}}
+        
+        <div class="flex flex-col gap-3">
+          {{#if (eq userRole 'admin')}}
+            <a href="/admin/dashboard" class="premium-button bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
+              <span class="text-xl mr-2">👑</span>
+              Admin Panel
+            </a>
+          {{/if}}
+          <div class="text-center">
+            <p class="text-sm text-indigo-200 mb-1">Member since</p>
+            <p class="text-lg font-semibold">2024</p>
+          </div>
+        </div>
       </div>
     </div>
 
     <style>
-      @keyframes wave {
-        0% { transform: translateX(0) translateY(0); }
-        50% { transform: translateX(-25%) translateY(-10px); }
-        100% { transform: translateX(0) translateY(0); }
-      }
-      
-      .wave-pattern {
-        background-image: 
-          radial-gradient(circle at 20% 50%, rgba(255,255,255,0.2) 0%, transparent 50%),
-          radial-gradient(circle at 80% 80%, rgba(255,255,255,0.2) 0%, transparent 50%),
-          radial-gradient(circle at 40% 20%, rgba(255,255,255,0.2) 0%, transparent 50%);
-        animation: wave 15s ease-in-out infinite;
-        height: 100%;
-        width: 200%;
-      }
-      
-      @keyframes fade-in {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      
-      .animate-fade-in {
-        animation: fade-in 0.6s ease-out;
-      }
-      
+      /* Premium Animations */
       @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-10px) rotate(1deg); }
       }
       
-      .float-animation {
-        animation: float 3s ease-in-out infinite;
+      @keyframes glow {
+        0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3), 0 0 40px rgba(99, 102, 241, 0.1); }
+        50% { box-shadow: 0 0 30px rgba(99, 102, 241, 0.5), 0 0 60px rgba(99, 102, 241, 0.2); }
       }
       
-      @keyframes pulse-glow {
-        0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
-        50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8); }
+      @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
       }
       
-      .pulse-glow {
-        animation: pulse-glow 2s ease-in-out infinite;
+      @keyframes particle-float {
+        0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.3; }
+        25% { transform: translateY(-20px) translateX(10px); opacity: 0.7; }
+        50% { transform: translateY(-10px) translateX(-5px); opacity: 0.5; }
+        75% { transform: translateY(-30px) translateX(15px); opacity: 0.8; }
+      }
+      
+      /* Premium Components */
+      .premium-badge {
+        @apply px-4 py-2 bg-white/20 rounded-full text-sm backdrop-blur-sm border border-white/30 flex items-center gap-2 hover:bg-white/30 transition-all duration-300 cursor-default;
+      }
+      
+      .premium-button {
+        @apply px-8 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20 flex items-center justify-center;
+        animation: glow 3s ease-in-out infinite;
+      }
+      
+      .premium-card {
+        @apply bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-2;
+        background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
+      }
+      
+      .stats-card {
+        @apply rounded-3xl shadow-2xl p-8 text-white relative overflow-hidden transition-all duration-500 transform hover:-translate-y-3 hover:shadow-3xl;
+        background: linear-gradient(135deg, var(--gradient-from) 0%, var(--gradient-to) 100%);
+        border: 1px solid rgba(255,255,255,0.2);
+      }
+      
+      .stats-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        animation: shimmer 3s infinite;
+      }
+      
+      .stats-card::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+      }
+      
+      .action-card {
+        @apply group relative bg-gradient-to-br rounded-2xl p-6 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl border-2 border-transparent;
+        background: linear-gradient(135deg, var(--bg-from) 0%, var(--bg-to) 100%);
+      }
+      
+      .action-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        padding: 2px;
+        background: linear-gradient(135deg, var(--border-from), var(--border-to));
+        border-radius: inherit;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      
+      .action-card:hover::before {
+        opacity: 1;
+      }
+      
+      .floating-particles {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      
+      .floating-particles::before,
+      .floating-particles::after {
+        content: '';
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: rgba(255,255,255,0.3);
+        border-radius: 50%;
+        animation: particle-float 8s infinite linear;
+      }
+      
+      .floating-particles::before {
+        top: 20%;
+        left: 20%;
+        animation-delay: -2s;
+      }
+      
+      .floating-particles::after {
+        top: 60%;
+        right: 30%;
+        animation-delay: -4s;
+      }
+      
+      .glass-morphism {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      
+      /* Responsive Enhancements */
+      @media (max-width: 768px) {
+        .premium-button {
+          @apply px-6 py-3 text-sm;
+        }
+        
+        .stats-card {
+          @apply p-6;
+        }
       }
     </style>
 
@@ -106,158 +227,185 @@
       </div>
     {{/if}}
 
-    <!-- Quick Stats with Enhanced Design -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <!-- Premium Stats Dashboard -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
       <!-- My Bookings Card -->
-      <div class="group bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 text-white relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-16 -mt-16"></div>
-        <div class="relative z-10">
-          <div class="flex items-center justify-between mb-4">
-            <div class="bg-white bg-opacity-20 p-3 rounded-xl backdrop-blur-sm float-animation">
-              <span class="text-4xl">📅</span>
+      <div class="stats-card" style="--gradient-from: #3b82f6; --gradient-to: #1d4ed8;">
+        <div class="relative z-20">
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+              <span class="text-3xl">📅</span>
             </div>
             <div class="text-right">
-              <p class="text-blue-100 text-sm font-semibold">My Bookings</p>
-              <p class="text-4xl font-bold mt-1" id="totalBookings">0</p>
+              <p class="text-blue-100 text-sm font-semibold uppercase tracking-wider">My Bookings</p>
+              <p class="text-5xl font-bold mt-2 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent" id="totalBookings">0</p>
             </div>
           </div>
-          <div class="pt-4 border-t border-white border-opacity-20">
-            <p class="text-blue-100 text-sm" id="bookingStatus">Loading...</p>
+          <div class="pt-4 border-t border-white/20">
+            <div class="flex justify-between items-center">
+              <p class="text-blue-100 text-sm" id="bookingStatus">Loading...</p>
+              <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Total Spent Card -->
-      <div class="group bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 text-white relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-16 -mt-16"></div>
-        <div class="relative z-10">
-          <div class="flex items-center justify-between mb-4">
-            <div class="bg-white bg-opacity-20 p-3 rounded-xl backdrop-blur-sm float-animation" style="animation-delay: 0.2s">
-              <span class="text-4xl">💰</span>
+      <div class="stats-card" style="--gradient-from: #10b981; --gradient-to: #047857;">
+        <div class="relative z-20">
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+              <span class="text-3xl">💎</span>
             </div>
             <div class="text-right">
-              <p class="text-green-100 text-sm font-semibold">Total Spent</p>
-              <p class="text-4xl font-bold mt-1" id="totalSpent">₱0</p>
+              <p class="text-emerald-100 text-sm font-semibold uppercase tracking-wider">Total Spent</p>
+              <p class="text-5xl font-bold mt-2 bg-gradient-to-r from-white to-emerald-200 bg-clip-text text-transparent" id="totalSpent">₱0</p>
             </div>
           </div>
-          <div class="pt-4 border-t border-white border-opacity-20">
-            <p class="text-green-100 text-sm">Lifetime spending</p>
+          <div class="pt-4 border-t border-white/20">
+            <div class="flex justify-between items-center">
+              <p class="text-emerald-100 text-sm">Lifetime investment</p>
+              <span class="px-2 py-1 bg-emerald-400/20 rounded-full text-xs text-emerald-200">Premium</span>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Upcoming Trips Card -->
-      <div class="group bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 text-white relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-16 -mt-16"></div>
-        <div class="relative z-10">
-          <div class="flex items-center justify-between mb-4">
-            <div class="bg-white bg-opacity-20 p-3 rounded-xl backdrop-blur-sm float-animation" style="animation-delay: 0.4s">
-              <span class="text-4xl">🏖️</span>
+      <div class="stats-card" style="--gradient-from: #8b5cf6; --gradient-to: #7c3aed;">
+        <div class="relative z-20">
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+              <span class="text-3xl">🏖️</span>
             </div>
             <div class="text-right">
-              <p class="text-purple-100 text-sm font-semibold">Upcoming Trips</p>
-              <p class="text-4xl font-bold mt-1" id="upcomingTrips">0</p>
+              <p class="text-purple-100 text-sm font-semibold uppercase tracking-wider">Upcoming Trips</p>
+              <p class="text-5xl font-bold mt-2 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent" id="upcomingTrips">0</p>
             </div>
           </div>
-          <div class="pt-4 border-t border-white border-opacity-20">
-            <p class="text-purple-100 text-sm" id="nextTrip">No upcoming trips</p>
+          <div class="pt-4 border-t border-white/20">
+            <div class="flex justify-between items-center">
+              <p class="text-purple-100 text-sm" id="nextTrip">No upcoming trips</p>
+              <div class="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Quick Actions with Enhanced Cards -->
-    <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
-      <div class="flex items-center justify-between mb-6">
-        <h3 class="text-2xl font-bold text-gray-800 flex items-center">
-          <span class="bg-gradient-to-r from-blue-600 to-cyan-600 text-white p-2 rounded-lg mr-3">⚡</span>
-          Quick Actions
-        </h3>
-        <span class="text-sm text-gray-500">Choose an action below</span>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <!-- New Booking -->
-        <a href="/bookings/select" class="group relative bg-gradient-to-br from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 rounded-xl p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-lg border-2 border-transparent hover:border-blue-300">
-          <div class="flex items-start justify-between mb-3">
-            <div class="bg-blue-600 text-white p-3 rounded-xl group-hover:scale-110 transition-transform">
-              <span class="text-3xl">🏨</span>
-            </div>
-            <svg class="w-6 h-6 text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-            </svg>
+    <!-- Premium Quick Actions -->
+    <div class="premium-card p-8 mb-8">
+      <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center">
+          <div class="w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center mr-4">
+            <span class="text-2xl">⚡</span>
           </div>
-          <h4 class="font-bold text-gray-800 text-lg mb-1">New Booking</h4>
-          <p class="text-sm text-gray-600">Reserve your perfect getaway</p>
+          <div>
+            <h3 class="text-2xl font-bold text-gray-800">Quick Actions</h3>
+            <p class="text-gray-600">Everything you need at your fingertips</p>
+          </div>
+        </div>
+        <div class="hidden md:flex items-center space-x-2">
+          <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+          <span class="text-sm text-gray-500">All systems operational</span>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- New Booking -->
+        <a href="/bookings/select" class="action-card" style="--bg-from: rgba(59, 130, 246, 0.05); --bg-to: rgba(147, 197, 253, 0.05); --border-from: #3b82f6; --border-to: #93c5fd;">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+              <span class="text-2xl">🏨</span>
+            </div>
+            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
+              <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+              </svg>
+            </div>
+          </div>
+          <h4 class="font-bold text-gray-800 text-xl mb-2">New Booking</h4>
+          <p class="text-gray-600 text-sm leading-relaxed">Reserve your perfect getaway with our premium accommodations</p>
         </a>
 
         <!-- My Bookings -->
-        <a href="/bookings" class="group relative bg-gradient-to-br from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 rounded-xl p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-lg border-2 border-transparent hover:border-green-300">
-          <div class="flex items-start justify-between mb-3">
-            <div class="bg-green-600 text-white p-3 rounded-xl group-hover:scale-110 transition-transform">
-              <span class="text-3xl">📋</span>
+        <a href="/bookings" class="action-card" style="--bg-from: rgba(16, 185, 129, 0.05); --bg-to: rgba(110, 231, 183, 0.05); --border-from: #10b981; --border-to: #6ee7b7;">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+              <span class="text-2xl">📋</span>
             </div>
-            <svg class="w-6 h-6 text-green-600 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-            </svg>
+            <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
+              <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+              </svg>
+            </div>
           </div>
-          <h4 class="font-bold text-gray-800 text-lg mb-1">My Bookings</h4>
-          <p class="text-sm text-gray-600">View all reservations</p>
+          <h4 class="font-bold text-gray-800 text-xl mb-2">My Bookings</h4>
+          <p class="text-gray-600 text-sm leading-relaxed">Manage and track all your reservations in one place</p>
         </a>
 
         <!-- My Profile -->
-        <a href="/profile" class="group relative bg-gradient-to-br from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 rounded-xl p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-lg border-2 border-transparent hover:border-purple-300">
-          <div class="flex items-start justify-between mb-3">
-            <div class="bg-purple-600 text-white p-3 rounded-xl group-hover:scale-110 transition-transform">
-              <span class="text-3xl">👤</span>
+        <a href="/profile" class="action-card" style="--bg-from: rgba(139, 92, 246, 0.05); --bg-to: rgba(196, 181, 253, 0.05); --border-from: #8b5cf6; --border-to: #c4b5fd;">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+              <span class="text-2xl">👤</span>
             </div>
-            <svg class="w-6 h-6 text-purple-600 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-            </svg>
+            <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
+              <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+              </svg>
+            </div>
           </div>
-          <h4 class="font-bold text-gray-800 text-lg mb-1">My Profile</h4>
-          <p class="text-sm text-gray-600">Update your information</p>
+          <h4 class="font-bold text-gray-800 text-xl mb-2">My Profile</h4>
+          <p class="text-gray-600 text-sm leading-relaxed">Update your personal information and preferences</p>
         </a>
 
         <!-- Feedback -->
-        <a href="/feedback" class="group relative bg-gradient-to-br from-orange-50 to-yellow-50 hover:from-orange-100 hover:to-yellow-100 rounded-xl p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-lg border-2 border-transparent hover:border-orange-300">
-          <div class="flex items-start justify-between mb-3">
-            <div class="bg-orange-600 text-white p-3 rounded-xl group-hover:scale-110 transition-transform">
-              <span class="text-3xl">⭐</span>
+        <a href="/feedback" class="action-card" style="--bg-from: rgba(245, 158, 11, 0.05); --bg-to: rgba(251, 191, 36, 0.05); --border-from: #f59e0b; --border-to: #fbbf24;">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+              <span class="text-2xl">⭐</span>
             </div>
-            <svg class="w-6 h-6 text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-            </svg>
+            <div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
+              <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+              </svg>
+            </div>
           </div>
-          <h4 class="font-bold text-gray-800 text-lg mb-1">Feedback & Ratings</h4>
-          <p class="text-sm text-gray-600">Share your experience</p>
+          <h4 class="font-bold text-gray-800 text-xl mb-2">Feedback & Ratings</h4>
+          <p class="text-gray-600 text-sm leading-relaxed">Share your experience and help us improve</p>
         </a>
 
         <!-- Contact -->
-        <a href="/contact" class="group relative bg-gradient-to-br from-pink-50 to-rose-50 hover:from-pink-100 hover:to-rose-100 rounded-xl p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-lg border-2 border-transparent hover:border-pink-300">
-          <div class="flex items-start justify-between mb-3">
-            <div class="bg-pink-600 text-white p-3 rounded-xl group-hover:scale-110 transition-transform">
-              <span class="text-3xl">💬</span>
+        <a href="/contact" class="action-card" style="--bg-from: rgba(236, 72, 153, 0.05); --bg-to: rgba(251, 113, 133, 0.05); --border-from: #ec4899; --border-to: #fb7185;">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+              <span class="text-2xl">💬</span>
             </div>
-            <svg class="w-6 h-6 text-pink-600 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-            </svg>
+            <div class="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
+              <svg class="w-4 h-4 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+              </svg>
+            </div>
           </div>
-          <h4 class="font-bold text-gray-800 text-lg mb-1">Contact Us</h4>
-          <p class="text-sm text-gray-600">Get support anytime</p>
+          <h4 class="font-bold text-gray-800 text-xl mb-2">Contact Support</h4>
+          <p class="text-gray-600 text-sm leading-relaxed">Get 24/7 premium support from our team</p>
         </a>
 
         <!-- Amenities -->
-        <a href="/amenities" class="group relative bg-gradient-to-br from-teal-50 to-cyan-50 hover:from-teal-100 hover:to-cyan-100 rounded-xl p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-lg border-2 border-transparent hover:border-teal-300">
-          <div class="flex items-start justify-between mb-3">
-            <div class="bg-teal-600 text-white p-3 rounded-xl group-hover:scale-110 transition-transform">
-              <span class="text-3xl">🏝️</span>
+        <a href="/amenities" class="action-card" style="--bg-from: rgba(20, 184, 166, 0.05); --bg-to: rgba(94, 234, 212, 0.05); --border-from: #14b8a6; --border-to: #5eead4;">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-teal-500 to-teal-600 text-white rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+              <span class="text-2xl">🏝️</span>
             </div>
-            <svg class="w-6 h-6 text-teal-600 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-            </svg>
+            <div class="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
+              <svg class="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+              </svg>
+            </div>
           </div>
-          <h4 class="font-bold text-gray-800 text-lg mb-1">Resort Amenities</h4>
-          <p class="text-sm text-gray-600">Explore our facilities</p>
+          <h4 class="font-bold text-gray-800 text-xl mb-2">Resort Amenities</h4>
+          <p class="text-gray-600 text-sm leading-relaxed">Discover our world-class facilities and services</p>
         </a>
       </div>
     </div>
